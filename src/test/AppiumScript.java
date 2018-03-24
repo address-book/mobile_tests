@@ -25,6 +25,8 @@ public class AppiumScript {
         driver.findElement(By.tagName("button")).click();
         driver.findElement(By.id("sign-in")).click();
 
+        Thread.sleep(5000);
+
         driver.findElement(By.id("session_email")).sendKeys("user@example.com");
         driver.findElement(By.id("session_password")).sendKeys("password");
         driver.findElement(By.name("commit")).click();
