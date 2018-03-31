@@ -80,13 +80,19 @@ public class Authentication {
         assertEquals(0, driver.findElements(currentUser).size());
     }
 
-    @Test
-    public void signUpSuccessfully() {
+    @Test(dataProvider = "randomUser", dataProviderClass = UserData.class)
+    public void signUpSuccessfully(String email, String password) {
         driver.get("http://a.testaddressbook.com/sign_up");
 
         // Add Action Code
 
+        driver.findElement(By.id("user_email")).sendKeys(email);
+        driver.findElement(By.id("user_password")).sendKeys(password);
+        driver.findElement(By.name("commit")).click();
+
         // Add Assertion Code
+
+        assertEquals("Address Book", driver.getTitle());
     }
 
 }
