@@ -34,7 +34,6 @@ public class Authentication {
                 new URL("http://localhost:4723/wd/hub"), capabilities);
 
         wait = new WebDriverWait(driver, 10);
-        driver.get("http://a.testaddressbook.com/sign_in");
     }
 
     @AfterMethod
@@ -44,6 +43,8 @@ public class Authentication {
 
     @Test(dataProvider = "validUser", dataProviderClass = UserData.class)
     public void signIn(String email, String password) {
+        driver.get("http://a.testaddressbook.com/sign_in");
+
         WebElement emailElement = wait.until(
                 ExpectedConditions.presenceOfElementLocated(
                         By.id("session_email")));
@@ -58,6 +59,8 @@ public class Authentication {
 
     @Test
     public void signInBlankPasswordUnsuccessful() {
+        driver.get("http://a.testaddressbook.com/sign_in");
+
         // Add Action Code
 
         WebElement emailElement = wait.until(
@@ -75,6 +78,15 @@ public class Authentication {
 
         By currentUser = By.cssSelector("span[data-test=current-user]");
         assertEquals(0, driver.findElements(currentUser).size());
+    }
+
+    @Test
+    public void signUpSuccessfully() {
+        driver.get("http://a.testaddressbook.com/sign_up");
+
+        // Add Action Code
+
+        // Add Assertion Code
     }
 
 }
