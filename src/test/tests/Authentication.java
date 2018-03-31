@@ -1,6 +1,8 @@
 package test.tests;
 
 import io.appium.java_client.android.AndroidDriver;
+import org.junit.After;
+import org.junit.Before;
 import org.junit.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
@@ -15,23 +17,31 @@ import static org.junit.Assert.assertEquals;
 
 public class Authentication {
 
-    @Test
-    public void signInSuccessful() throws MalformedURLException {
+    private AndroidDriver driver;
+    private WebDriverWait wait;
+
+    @Before
+    public void setup() throws MalformedURLException {
         DesiredCapabilities capabilities = new DesiredCapabilities();
         capabilities.setCapability("platformName", "Android");
         capabilities.setCapability("platformVersion", "8.1");
         capabilities.setCapability("deviceName", "Android_Emulator");
         capabilities.setCapability("browserName", "Chrome");
 
-        AndroidDriver driver = new AndroidDriver<>(
+        driver = new AndroidDriver<>(
                 new URL("http://localhost:4723/wd/hub"), capabilities);
 
-        driver.get("http://a.testaddressbook.com");
-        driver.findElement(By.tagName("button")).click();
-        driver.findElement(By.id("sign-in")).click();
+        wait = new WebDriverWait(driver, 10);
+        driver.get("http://a.testaddressbook.com/sign_in");
+    }
 
-        WebDriverWait wait = new WebDriverWait(driver, 10);
+    @After
+    public void teardown() {
+        driver.quit();
+    }
 
+    @Test
+    public void signInSuccessful() {
         WebElement emailElement = wait.until(
                 ExpectedConditions.presenceOfElementLocated(
                         By.id("session_email")));
@@ -40,33 +50,13 @@ public class Authentication {
         driver.findElement(By.id("session_password")).sendKeys("password");
         driver.findElement(By.name("commit")).click();
 
-        assertEquals("Address Book", driver.getTitle());
-        assertEquals("http://a.testaddressbook.com/", driver.getCurrentUrl());
-
         By currentUser = By.cssSelector("span[data-test=current-user]");
         assertEquals(1, driver.findElements(currentUser).size());
-
-        driver.quit();
     }
 
     @Test
-    public void signInBlankPasswordUnsuccessful() throws MalformedURLException {
-        DesiredCapabilities capabilities = new DesiredCapabilities();
-        capabilities.setCapability("platformName", "Android");
-        capabilities.setCapability("platformVersion", "8.1");
-        capabilities.setCapability("deviceName", "Android_Emulator");
-        capabilities.setCapability("browserName", "Chrome");
-
-        AndroidDriver driver = new AndroidDriver<>(
-                new URL("http://localhost:4723/wd/hub"), capabilities);
-
-        driver.get("http://a.testaddressbook.com");
-        driver.findElement(By.tagName("button")).click();
-        driver.findElement(By.id("sign-in")).click();
-
+    public void signInBlankPasswordUnsuccessful() {
         // Add Action Code
-
-        WebDriverWait wait = new WebDriverWait(driver, 10);
 
         WebElement emailElement = wait.until(
                 ExpectedConditions.presenceOfElementLocated(
@@ -81,13 +71,8 @@ public class Authentication {
         By alertNotice = By.className("alert-notice");
         assertEquals(1, driver.findElements(alertNotice).size());
 
-        assertEquals("Address Book - Sign In", driver.getTitle());
-        assertEquals("http://a.testaddressbook.com/session", driver.getCurrentUrl());
-
         By currentUser = By.cssSelector("span[data-test=current-user]");
         assertEquals(0, driver.findElements(currentUser).size());
-
-        driver.quit();
     }
 
 }
