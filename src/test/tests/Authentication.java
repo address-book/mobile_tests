@@ -1,9 +1,11 @@
 package test.tests;
 
+import test.data.UserData;
+
 import io.appium.java_client.android.AndroidDriver;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
+import org.testng.annotations.AfterMethod;
+import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.remote.DesiredCapabilities;
@@ -20,7 +22,7 @@ public class Authentication {
     private AndroidDriver driver;
     private WebDriverWait wait;
 
-    @Before
+    @BeforeMethod
     public void setup() throws MalformedURLException {
         DesiredCapabilities capabilities = new DesiredCapabilities();
         capabilities.setCapability("platformName", "Android");
@@ -35,19 +37,19 @@ public class Authentication {
         driver.get("http://a.testaddressbook.com/sign_in");
     }
 
-    @After
+    @AfterMethod
     public void teardown() {
         driver.quit();
     }
 
-    @Test
-    public void signInSuccessful() {
+    @Test(dataProvider = "validUser", dataProviderClass = UserData.class)
+    public void signIn(String email, String password) {
         WebElement emailElement = wait.until(
                 ExpectedConditions.presenceOfElementLocated(
                         By.id("session_email")));
 
-        emailElement.sendKeys("user@example.com");
-        driver.findElement(By.id("session_password")).sendKeys("password");
+        emailElement.sendKeys(email);
+        driver.findElement(By.id("session_password")).sendKeys(password);
         driver.findElement(By.name("commit")).click();
 
         By currentUser = By.cssSelector("span[data-test=current-user]");
