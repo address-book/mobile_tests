@@ -33,13 +33,6 @@ public class HomePage {
         PageFactory.initElements(driver, this);
     }
 
-    public SignInPage navigateToSignIn() {
-        menu.click();
-        signIn.click();
-
-        return new SignInPage(driver);
-    }
-
     public Boolean isSignedIn() {
         WebDriverWait wait = new WebDriverWait(driver, 10);
 

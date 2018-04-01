@@ -40,13 +40,6 @@ public class SignInPage {
         PageFactory.initElements(driver, this);
     }
 
-    public SignUpPage navigateToSignUp() {
-        WebDriverWait wait = new WebDriverWait(driver, 10);
-        wait.until(ExpectedConditions.visibilityOf(signUpLink)).click();
-
-        return new SignUpPage(driver);
-    }
-
     public void signIn(UserData user) {
         wait = new WebDriverWait(driver, 10);
 

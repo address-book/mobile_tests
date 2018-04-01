@@ -20,6 +20,10 @@ public class SignUpPage {
     @FindBy(name = "commit")
     private WebElement submit;
 
+    public static SignUpPage visit(AndroidDriver driver) {
+        // Implement Method
+    }
+
     SignUpPage(AndroidDriver driver) {
         this.driver = driver;
         PageFactory.initElements(driver, this);

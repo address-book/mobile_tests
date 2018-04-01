@@ -65,6 +65,8 @@ public class Authentication {
 
     @Test
     public void signInBlankPasswordUnsuccessful() {
+        // Fix Test
+
         HomePage homePage = HomePage.visit(driver);
         SignInPage signInPage = homePage.navigateToSignIn();
 
@@ -76,6 +78,8 @@ public class Authentication {
 
     @Test
     public void signUpSuccessfully() {
+        // Fix Test
+
         HomePage homePage = HomePage.visit(driver);
         SignInPage signInPage = homePage.navigateToSignIn();
         SignUpPage signUpPage = signInPage.navigateToSignUp();
