@@ -29,7 +29,7 @@ public class SignInPage {
     @FindBy(className = "alert")
     private List<WebElement> alerts;
 
-    SignInPage(AndroidDriver driver) {
+    public SignInPage(AndroidDriver driver) {
         this.driver = driver;
         PageFactory.initElements(driver, this);
     }
@@ -41,17 +41,7 @@ public class SignInPage {
         return new SignUpPage(driver);
     }
 
-    public HomePage signInSuccessfully(UserData user) {
-        submitForm(user);
-        return new HomePage(driver);
-    }
-
-    public SignInPage signInFailing(UserData user) {
-        submitForm(user);
-        return new SignInPage(driver);
-    }
-
-    private void submitForm(UserData user) {
+    public void signIn(UserData user) {
         wait = new WebDriverWait(driver, 10);
 
         wait.until(ExpectedConditions.visibilityOf(emailField)).

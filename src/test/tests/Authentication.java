@@ -56,7 +56,13 @@ public class Authentication {
 
     @Test
     public void signInSuccessful() {
-        assertTrue(HomePage.visit(driver).navigateToSignIn().signInSuccessfully(UserData.validUser()).isSignedIn());
+        HomePage homePage = HomePage.visit(driver);
+        homePage.navigateToSignIn();
+
+        SignInPage signInPage = new SignInPage(driver);
+        signInPage.signIn(UserData.validUser());
+
+        assertTrue(homePage.isSignedIn());
     }
 
     @Test
@@ -64,9 +70,9 @@ public class Authentication {
         HomePage homePage = HomePage.visit(driver);
         SignInPage signInPage = homePage.navigateToSignIn();
 
-        SignInPage signInPage1 = signInPage.signInFailing(UserData.blankPassword());
+        signInPage.signIn(UserData.blankPassword());
 
-        assertTrue(signInPage1.hasAlertNotice());
+        assertTrue(signInPage.hasAlertNotice());
         assertFalse(HomePage.visit(driver).isSignedIn());
     }
 
