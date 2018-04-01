@@ -5,10 +5,10 @@ import test.pages.*;
 
 import org.testng.annotations.Test;
 
-import static org.junit.Assert.assertTrue;
 import static org.testng.Assert.assertFalse;
+import static org.testng.Assert.assertTrue;
 
-public class Authentication extends BaseTest {
+public class SignIn extends BaseTest {
     @Test
     public void signInSuccessful() {
         SignInPage signInPage = SignInPage.visit(driver);
@@ -26,14 +26,4 @@ public class Authentication extends BaseTest {
         assertTrue(signInPage.hasAlertNotice());
         assertFalse(HomePage.visit(driver).isSignedIn());
     }
-
-    @Test
-    public void signUpSuccessfully() {
-        SignUpPage signUpPage = SignUpPage.visit(driver);
-        signUpPage.signUp(UserData.randomUser());
-
-        HomePage homePage = new HomePage(driver);
-        assertTrue(homePage.isSignedIn());
-    }
-
 }

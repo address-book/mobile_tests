@@ -38,7 +38,7 @@ public class BaseTest {
 
         String platformProperty = System.getProperty("PLATFORM");
 
-        if (System.getProperty("USE_SAUCE") == null) {
+        if (System.getProperty("USE_SAUCE") != null) {
             String platform = (platformProperty != null) ? platformProperty : "androidChromeSauce";
             capabilities = createCapabilities(platform);
 
