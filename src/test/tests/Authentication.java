@@ -49,8 +49,10 @@ public class Authentication {
                 ExpectedConditions.presenceOfElementLocated(
                         By.id("session_email")));
 
-        emailElement.sendKeys(email);
-        driver.findElement(By.id("session_password")).sendKeys(password);
+        UserData userData = UserData.validUser();
+
+        emailElement.sendKeys(userData.getEmail());
+        driver.findElement(By.id("session_password")).sendKeys(userData.getPassword());
         driver.findElement(By.name("commit")).click();
 
         By currentUser = By.cssSelector("span[data-test=current-user]");
@@ -88,8 +90,10 @@ public class Authentication {
 
         // Add Action Code
 
-        driver.findElement(By.id("user_email")).sendKeys(email);
-        driver.findElement(By.id("user_password")).sendKeys(password);
+        UserData userData = UserData.randomUser();
+
+        driver.findElement(By.id("user_email")).sendKeys(userData.getEmail());
+        driver.findElement(By.id("user_password")).sendKeys(userData.getPassword());
         driver.findElement(By.name("commit")).click();
 
         // Add Assertion Code

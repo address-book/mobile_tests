@@ -19,10 +19,17 @@ public class UserData {
 
     public static UserData validUser() {
         // implement method
+        Map<String, String> data = new HashMap<String, String>();
+        data.put("email", "user@example.com");
+        data.put("password", "password");
+
+        return new UserData(data);
     }
 
     public static UserData randomUser() {
         // implement method
+        Map<String, String> data = new HashMap<String, String>();
+        return new UserData(data);
     }
 
     private UserData(Map<String, String> defaultData) {
