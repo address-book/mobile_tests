@@ -11,16 +11,28 @@ import test.data.UserData;
 public class SignUpPage {
     private AndroidDriver driver;
 
-    public static SignUpPage visit(AndroidDriver driver) {
-        // Implement Method
+    @FindBy(id = "user_email")
+    private WebElement emailField;
+
+    @FindBy(id = "user_password")
+    private WebElement passwordField;
+
+    @FindBy(name = "commit")
+    private WebElement submit;
+
+    SignUpPage(AndroidDriver driver) {
+        this.driver = driver;
+        PageFactory.initElements(driver, this);
     }
 
-    private SignUpPage(AndroidDriver driver) {
-        // Implement Method
-    }
+    public HomePage signUp(UserData user) {
+        WebDriverWait wait = new WebDriverWait(driver, 10);
 
-    public void signIn(UserData data) {
-        // Implement Method
+        wait.until(ExpectedConditions.visibilityOf(emailField)).sendKeys(user.getEmail());
+        passwordField.sendKeys(user.getPassword());
+        submit.click();
+
+        return new HomePage(driver);
     }
 }
 

@@ -7,6 +7,8 @@ import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import java.util.List;
+
 public class HomePage {
     private AndroidDriver driver;
 
@@ -17,7 +19,7 @@ public class HomePage {
     private WebElement signIn;
 
     @FindBy(css = "span[data-test=current-user]")
-    private WebElement user;
+    private List<WebElement> users;
 
 
     public static HomePage visit(AndroidDriver driver) {
@@ -26,23 +28,25 @@ public class HomePage {
         return page;
     }
 
-    private HomePage(AndroidDriver driver) {
+    HomePage(AndroidDriver driver) {
         this.driver = driver;
         PageFactory.initElements(driver, this);
     }
 
-    public void navigateToSignIn() {
-        this.menu.click();
-        this.signIn.click();
+    public SignInPage navigateToSignIn() {
+        menu.click();
+        signIn.click();
+
+        return new SignInPage(driver);
     }
 
-    public Boolean isSignedIn(String email) {
+    public Boolean isSignedIn() {
         WebDriverWait wait = new WebDriverWait(driver, 10);
 
-        wait.until(ExpectedConditions.visibilityOf(this.menu)).click();
-        wait.until(ExpectedConditions.visibilityOf(this.user));
+        wait.until(ExpectedConditions.visibilityOf(menu)).click();
+        wait.until(ExpectedConditions.urlMatches("http://a.testaddressbook.com"));
 
-        return this.user.getText().equals(email);
+        return ((Integer) users.size()).equals(1);
     }
 }
 

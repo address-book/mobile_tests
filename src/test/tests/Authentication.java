@@ -1,7 +1,7 @@
 package test.tests;
 
 import test.data.UserData;
-import test.pages.HomePage;
+import test.pages.*;
 
 import io.appium.java_client.android.AndroidDriver;
 import org.testng.annotations.AfterMethod;
@@ -62,31 +62,23 @@ public class Authentication {
         UserData userData = UserData.validUser();
         HomePage homePage1 = signInPage.signIn(userData);
 
-        assertTrue(homePage1.isSignedIn(userData.getEmail()));
+        assertTrue(homePage1.isSignedIn());
     }
 
     @Test
     public void signInBlankPasswordUnsuccessful() {
-        //
-        // Rewrite Test Declaratively
-        //
-
         HomePage homePage = HomePage.visit(driver);
         SignInPage signInPage = homePage.navigateToSignIn();
 
         UserData userData = UserData.blankPassword();
         HomePage homePage1 = signInPage.signIn(userData);
 
-        assertTrue(homePage1.hasAlertNotice());
-        assertFalse(homePage1.isSignedIn(userData.getEmail()));
+        assertTrue(signInPage.hasAlertNotice());
+        assertFalse(homePage1.isSignedIn());
     }
 
     @Test
     public void signUpSuccessfully() {
-        //
-        // Rewrite Test Declaratively
-        //
-
         HomePage homePage = HomePage.visit(driver);
         SignInPage signInPage = homePage.navigateToSignIn();
         SignUpPage signUpPage = signInPage.navigateToSignUp();
@@ -94,7 +86,7 @@ public class Authentication {
         UserData userData = UserData.randomUser();
         HomePage homePage1 = signUpPage.signUp(userData);
 
-        assertTrue(homePage1.isSignedIn(userData.getEmail()));
+        assertTrue(homePage1.isSignedIn());
     }
 
 }

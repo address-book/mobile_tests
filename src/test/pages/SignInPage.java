@@ -8,23 +8,49 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import test.data.UserData;
 
+import java.util.List;
+
 public class SignInPage {
     private AndroidDriver driver;
 
-    public static SignInPage visit(AndroidDriver driver) {
-        // Implement Method
+    @FindBy(css = "a[data-test=sign-up]")
+    private WebElement signUpLink;
+
+    @FindBy(id = "session_email")
+    private WebElement emailField;
+
+    @FindBy(id = "session_password")
+    private WebElement passwordField;
+
+    @FindBy(name = "commit")
+    private WebElement submit;
+
+    @FindBy(className = "alert")
+    private List<WebElement> alerts;
+
+    SignInPage(AndroidDriver driver) {
+        this.driver = driver;
+        PageFactory.initElements(driver, this);
     }
 
-    private SignInPage(AndroidDriver driver) {
-        // Implement Method
+    public SignUpPage navigateToSignUp() {
+        WebDriverWait wait = new WebDriverWait(driver, 10);
+        wait.until(ExpectedConditions.visibilityOf(signUpLink)).click();
+
+        return new SignUpPage(driver);
     }
 
-    public void navigateToSignUp() {
-        // Implement Method
+    public HomePage signIn(UserData user) {
+        WebDriverWait wait = new WebDriverWait(driver, 10);
+
+        wait.until(ExpectedConditions.visibilityOf(emailField)).sendKeys(user.getEmail());
+        passwordField.sendKeys(user.getPassword());
+        submit.click();
+
+        return new HomePage(driver);
     }
 
-    public void signIn(UserData data) {
-        // Implement Method
+    public Boolean hasAlertNotice() {
+        return ((Integer) alerts.size()).equals(1);
     }
 }
-
