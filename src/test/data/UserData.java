@@ -1,24 +1,14 @@
 package test.data;
 
-import org.testng.annotations.DataProvider;
 import com.github.javafaker.Faker;
 
 import java.util.HashMap;
 import java.util.Map;
 
 public class UserData {
-    @DataProvider(name = "validUser")
-    public static Object[][] valid() {
-        return new Object[][] {{ "user@example.com", "password" }};
-    }
-
-    @DataProvider(name = "randomUser")
-    public static Object[][] random() {
-        Faker faker = new Faker();
-        return new Object[][] {
-                { faker.internet().emailAddress(), faker.internet().password() }
-        };
-    }
+    private String email;
+    private String password;
+    private Faker faker = new Faker();
 
     public static UserData blankPassword() {
         Map<String, String> data = new HashMap<String, String>();
@@ -27,13 +17,15 @@ public class UserData {
         return new UserData(data);
     }
 
-    private String email;
-    private String password;
-    private Faker faker;
+    public static UserData validUser() {
+        // implement method
+    }
 
-    public UserData(Map<String, String> defaultData) {
-        faker = new Faker();
+    public static UserData randomUser() {
+        // implement method
+    }
 
+    private UserData(Map<String, String> defaultData) {
         email = defaultData.get("email");
         password = defaultData.get("password");
 

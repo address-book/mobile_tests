@@ -14,8 +14,6 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.HashMap;
-import java.util.Map;
 
 import static org.junit.Assert.assertEquals;
 
@@ -43,8 +41,8 @@ public class Authentication {
         driver.quit();
     }
 
-    @Test(dataProvider = "validUser", dataProviderClass = UserData.class)
-    public void signIn(String email, String password) {
+    @Test
+    public void signIn() {
         driver.get("http://a.testaddressbook.com/sign_in");
 
         WebElement emailElement = wait.until(
@@ -84,8 +82,8 @@ public class Authentication {
         assertEquals(0, driver.findElements(currentUser).size());
     }
 
-    @Test(dataProvider = "randomUser", dataProviderClass = UserData.class)
-    public void signUpSuccessfully(String email, String password) {
+    @Test
+    public void signUpSuccessfully() {
         driver.get("http://a.testaddressbook.com/sign_up");
 
         // Add Action Code
