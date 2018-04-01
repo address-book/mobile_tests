@@ -28,7 +28,7 @@ public class HomePage {
         return page;
     }
 
-    HomePage(AndroidDriver driver) {
+    public HomePage(AndroidDriver driver) {
         this.driver = driver;
         PageFactory.initElements(driver, this);
     }

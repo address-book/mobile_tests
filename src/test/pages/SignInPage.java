@@ -29,6 +29,15 @@ public class SignInPage {
     @FindBy(className = "alert")
     private List<WebElement> alerts;
 
+    public static SignInPage visit(AndroidDriver driver) {
+        driver.get("http://a.testaddressbook.com");
+
+        HomePage homePage = HomePage.visit(driver);
+        homePage.navigateToSignIn();
+
+        return new SignInPage(driver);
+    }
+
     public SignInPage(AndroidDriver driver) {
         this.driver = driver;
         PageFactory.initElements(driver, this);

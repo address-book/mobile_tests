@@ -56,12 +56,10 @@ public class Authentication {
 
     @Test
     public void signInSuccessful() {
-        HomePage homePage = HomePage.visit(driver);
-        homePage.navigateToSignIn();
-
-        SignInPage signInPage = new SignInPage(driver);
+        SignInPage signInPage = SignInPage.visit(driver);
         signInPage.signIn(UserData.validUser());
 
+        HomePage homePage = new HomePage(driver);
         assertTrue(homePage.isSignedIn());
     }
 
