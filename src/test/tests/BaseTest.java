@@ -1,7 +1,9 @@
 package test.tests;
 
 import io.appium.java_client.android.AndroidDriver;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.remote.DesiredCapabilities;
+import org.testng.ITestResult;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.yaml.snakeyaml.Yaml;
@@ -62,7 +64,16 @@ public class BaseTest {
     }
 
     @AfterMethod
-    public void teardown() {
+    public void tearDown(ITestResult result) {
+        String status = result.isSuccess() ? "passed" : "failed";
+
+        if (System.getProperty("USE_SAUCE") == null) {
+            System.out.println(status);
+        } else {
+            JavascriptExecutor js = driver;
+            js.executeScript("sauce:job-result=" + status);
+        }
+
         driver.quit();
     }
 
