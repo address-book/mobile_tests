@@ -30,10 +30,7 @@ public class SignInPage {
     private List<WebElement> alerts;
 
     public static SignInPage visit(AndroidDriver driver) {
-        driver.get("http://a.testaddressbook.com");
-
-        HomePage homePage = HomePage.visit(driver);
-        homePage.navigateToSignIn();
+        driver.get("http://a.testaddressbook.com/sign_in");
 
         return new SignInPage(driver);
     }
