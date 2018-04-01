@@ -70,23 +70,14 @@ public class Authentication {
         // Rewrite Test Declaratively
         //
 
-//        driver.get("http://a.testaddressbook.com/sign_in");
-//
-//        WebElement emailElement = wait.until(
-//                ExpectedConditions.presenceOfElementLocated(
-//                        By.id("session_email")));
-//
-//        UserData userData = UserData.blankPassword();
-//
-//        emailElement.sendKeys(userData.getEmail());
-//        driver.findElement(By.id("session_password")).sendKeys(userData.getPassword());
-//        driver.findElement(By.name("commit")).click();
-//
-//        By alertNotice = By.className("alert-notice");
-//        assertEquals(1, driver.findElements(alertNotice).size());
-//
-//        By currentUser = By.cssSelector("span[data-test=current-user]");
-//        assertEquals(0, driver.findElements(currentUser).size());
+        HomePage homePage = HomePage.visit(driver);
+        SignInPage signInPage = homePage.navigateToSignIn();
+
+        UserData userData = UserData.blankPassword();
+        HomePage homePage1 = signInPage.signIn(userData);
+
+        assertTrue(homePage1.hasAlertNotice());
+        assertFalse(homePage1.isSignedIn(userData.getEmail()));
     }
 
     @Test
@@ -95,15 +86,14 @@ public class Authentication {
         // Rewrite Test Declaratively
         //
 
-//        driver.get("http://a.testaddressbook.com/sign_up");
-//
-//        UserData userData = UserData.randomUser();
-//
-//        driver.findElement(By.id("user_email")).sendKeys(userData.getEmail());
-//        driver.findElement(By.id("user_password")).sendKeys(userData.getPassword());
-//        driver.findElement(By.name("commit")).click();
-//
-//        assertEquals("Address Book", driver.getTitle());
+        HomePage homePage = HomePage.visit(driver);
+        SignInPage signInPage = homePage.navigateToSignIn();
+        SignUpPage signUpPage = signInPage.navigateToSignUp();
+
+        UserData userData = UserData.randomUser();
+        HomePage homePage1 = signUpPage.signUp(userData);
+
+        assertTrue(homePage1.isSignedIn(userData.getEmail()));
     }
 
 }
