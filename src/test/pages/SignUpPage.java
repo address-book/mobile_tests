@@ -17,7 +17,7 @@ public class SignUpPage extends BasePage {
     private static WebElement passwordField;
 
     @FindBy(name = "commit")
-    @AndroidFindBy(xpath = "//android.widget.Button[@content-desc=\"Sign up\"]")
+    @AndroidFindBy(xpath = "//android.widget.Button[@content-desc='Sign up' or @text='Sign up']")
     private WebElement submit;
 
     public static SignUpPage visit(AndroidDriver driver) {

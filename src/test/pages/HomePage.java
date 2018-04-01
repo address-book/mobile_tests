@@ -9,7 +9,7 @@ import java.util.List;
 
 public class HomePage extends BasePage {
     @FindBy(tagName = "button")
-    @AndroidFindBy(accessibility = "Toggle navigation")
+    @AndroidFindBy(className = "android.widget.Button")
     private static WebElement menu;
 
     @AndroidFindBy(id = "sign-in")

@@ -17,14 +17,14 @@ public class SignInPage extends BasePage {
     private static WebElement passwordField;
 
     @FindBy(name = "commit")
-    @AndroidFindBy(xpath = "//android.widget.Button[@content-desc=\"Sign in\"]")
+    @AndroidFindBy(xpath = "//android.widget.Button[@content-desc='Sign in' or @text='Sign in']")
     private static WebElement submit;
 
     @FindBy(className = "alert")
-    @AndroidFindBy(accessibility = "Bad email or password.")
+    @AndroidFindBy(xpath = "//android.view.View[@content-desc='Bad email or password.' or @text='Bad email or password.']")
     private static List<WebElement> alerts;
 
-    @AndroidFindBy(accessibility = "Sign up")
+    @AndroidFindBy(xpath = "//android.view.View[@content-desc='Sign up' or @text='Sign up']")
     private static WebElement signUp;
 
     public static SignInPage visit(AndroidDriver driver) {
