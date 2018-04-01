@@ -8,6 +8,7 @@ import org.yaml.snakeyaml.Yaml;
 
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.lang.reflect.Method;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Map;
@@ -25,20 +26,39 @@ public class BaseTest {
         capabilities.setCapability("platformVersion", platform.get("platformVersion"));
         capabilities.setCapability("deviceName", platform.get("deviceName"));
         capabilities.setCapability("browserName", platform.get("browserName"));
+        capabilities.setCapability("appiumVersion", platform.get("appiumVersion"));
 
         return capabilities;
     }
 
     @BeforeMethod
-    public void setup() throws MalformedURLException, FileNotFoundException {
+    public void setup(Method method) throws MalformedURLException, FileNotFoundException {
+        String url;
+        DesiredCapabilities capabilities;
 
         String platformProperty = System.getProperty("PLATFORM");
-        String platform = (platformProperty != null) ? platformProperty : "androidChrome";
 
-        DesiredCapabilities capabilities = createCapabilities(platform);
+        if (System.getProperty("USE_SAUCE") == null) {
+            String platform = (platformProperty != null) ? platformProperty : "androidChromeSauce";
+            capabilities = createCapabilities(platform);
 
-        driver = new AndroidDriver<>(
-                new URL("http://localhost:4723/wd/hub"), capabilities);
+            String USER = System.getenv("SAUCE_USERNAME");
+            String KEY = System.getenv("SAUCE_ACCESS_KEY");
+
+            capabilities.setCapability("name", method.getName());
+            String buildEnv = System.getenv("BUILD_TAG");
+            if (buildEnv != null) {
+                capabilities.setCapability("build", buildEnv);
+            }
+
+            url = "https://" + USER + ":" + KEY + "@ondemand.saucelabs.com/wd/hub";
+        } else {
+            String platform = (platformProperty != null) ? platformProperty : "androidChrome";
+            capabilities = createCapabilities(platform);
+            url = "http://localhost:4723/wd/hub";
+        }
+
+        driver = new AndroidDriver<>(new URL(url), capabilities);
     }
 
     @AfterMethod
