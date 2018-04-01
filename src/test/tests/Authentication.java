@@ -20,6 +20,7 @@ import java.net.URL;
 import java.util.Map;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 public class Authentication {
 
@@ -60,21 +61,23 @@ public class Authentication {
     }
 
     @Test
-    public void signIn() {
-        driver.get("http://a.testaddressbook.com/sign_in");
+    public void signInSuccessful() {
+        HomePage homePage = new HomePage(driver);
 
-        WebElement emailElement = wait.until(
-                ExpectedConditions.presenceOfElementLocated(
-                        By.id("session_email")));
+        homePage.visit();
+        homePage.getMenuButton().click();
+        SignInPage signInPage = homePage.getSignInLink().click();
 
+        signInPage.waitFor(homePage.getEmailElement);
         UserData userData = UserData.validUser();
 
-        emailElement.sendKeys(userData.getEmail());
-        driver.findElement(By.id("session_password")).sendKeys(userData.getPassword());
-        driver.findElement(By.name("commit")).click();
+        signInPage.getEmailElement().sendKeys(userData.getEmail());
+        signInPage.getPasswordElement().sendKeys(userData.getPassword());
+        HomePage homePage2 = signInPage.getSubmitButton().click();
 
-        By currentUser = By.cssSelector("span[data-test=current-user]");
-        assertEquals(1, driver.findElements(currentUser).size());
+        Boolean currentUser = homePage2.isElementPresent(homPage.getCurrentUser);
+
+        assertTrue(currentUser);
     }
 
     @Test
