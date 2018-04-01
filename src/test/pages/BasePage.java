@@ -1,6 +1,8 @@
 package test.pages;
 
 import io.appium.java_client.android.AndroidDriver;
+import org.openqa.selenium.ElementNotVisibleException;
+import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -16,15 +18,35 @@ class BasePage {
     }
 
     void click(WebElement element) {
-        waitForElement(element).click();
+        while(true) {
+            try {
+                element.click();
+                return;
+            } catch (NoSuchElementException | ElementNotVisibleException e) {
+                waitForElement(element);
+            }
+        }
     }
 
     String getText(WebElement element) {
-        return waitForElement(element).getText();
+        while(true) {
+            try {
+                return element.getText();
+            } catch (NoSuchElementException | ElementNotVisibleException e) {
+                waitForElement(element);
+            }
+        }
     }
 
     void sendKeys(WebElement element, String text) {
-        waitForElement(element).sendKeys(text);
+        while(true) {
+            try {
+                element.sendKeys(text);
+                return;
+            } catch (NoSuchElementException | ElementNotVisibleException e) {
+                waitForElement(element);
+            }
+        }
     }
 
     void waitForPage(String url) {
@@ -32,9 +54,9 @@ class BasePage {
         wait.until(ExpectedConditions.urlMatches(url));
     }
 
-    private WebElement waitForElement(WebElement element) {
+    private void waitForElement(WebElement element) {
         wait = new WebDriverWait(driver, 30);
-        return wait.until(ExpectedConditions.visibilityOf(element));
+        wait.until(ExpectedConditions.visibilityOf(element));
     }
 }
 
