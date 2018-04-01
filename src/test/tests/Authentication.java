@@ -14,6 +14,8 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.HashMap;
+import java.util.Map;
 
 import static org.junit.Assert.assertEquals;
 
@@ -67,8 +69,10 @@ public class Authentication {
                 ExpectedConditions.presenceOfElementLocated(
                         By.id("session_email")));
 
-        emailElement.sendKeys("user@example.com");
-        driver.findElement(By.id("session_password")).sendKeys("");
+        UserData userData = UserData.blankPassword();
+
+        emailElement.sendKeys(userData.getEmail());
+        driver.findElement(By.id("session_password")).sendKeys(userData.getPassword());
         driver.findElement(By.name("commit")).click();
 
         // Add Assertion Code
