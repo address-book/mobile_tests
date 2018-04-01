@@ -24,7 +24,7 @@ public class HomePage extends BasePage {
     }
 
     public Boolean isSignedIn() {
-        click(menu);
+        getElement(menu).click();
         waitForPage("http://a.testaddressbook.com");
         return ((Integer) users.size()).equals(1);
     }

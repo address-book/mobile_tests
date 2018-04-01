@@ -28,9 +28,9 @@ public class SignUpPage extends BasePage {
     }
 
     public void signUp(UserData user) {
-        sendKeys(emailField, user.getEmail());
-        sendKeys(passwordField, user.getPassword());
-        click(submit);
+        getElement(emailField).sendKeys(user.getEmail());
+        getElement(passwordField).sendKeys(user.getPassword());
+        getElement(submit).click();
     }
 }
 

@@ -31,9 +31,9 @@ public class SignInPage extends BasePage {
     }
 
     public void signIn(UserData user) {
-        sendKeys(emailField, user.getEmail());
-        sendKeys(passwordField, user.getPassword());
-        click(submit);
+        getElement(emailField).sendKeys(user.getEmail());
+        getElement(passwordField).sendKeys(user.getPassword());
+        getElement(submit).click();
     }
 
     public Boolean hasAlertNotice() {
