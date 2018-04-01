@@ -20,21 +20,17 @@ public class SignUpPage extends BasePage {
 
     public static SignUpPage visit(AndroidDriver driver) {
         driver.get("http://a.testaddressbook.com/sign_up");
-
         return new SignUpPage(driver);
     }
 
-    SignUpPage(AndroidDriver driver) {
-        this.driver = driver;
-        PageFactory.initElements(driver, this);
+    public SignUpPage(AndroidDriver driver) {
+        super(driver);
     }
 
     public void signUp(UserData user) {
-        WebDriverWait wait = new WebDriverWait(driver, 10);
-
-        wait.until(ExpectedConditions.visibilityOf(emailField)).sendKeys(user.getEmail());
-        passwordField.sendKeys(user.getPassword());
-        submit.click();
+        sendKeys(emailField, user.getEmail());
+        sendKeys(passwordField, user.getPassword());
+        click(submit);
     }
 }
 

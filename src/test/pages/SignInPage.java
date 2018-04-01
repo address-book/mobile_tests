@@ -9,12 +9,6 @@ import org.openqa.selenium.support.FindBy;
 import java.util.List;
 
 public class SignInPage extends BasePage {
-    private AndroidDriver driver;
-    private WebDriverWait wait;
-
-    @FindBy(css = "a[data-test=sign-up]")
-    private WebElement signUpLink;
-
     @FindBy(id = "session_email")
     private WebElement emailField;
 
@@ -29,22 +23,17 @@ public class SignInPage extends BasePage {
 
     public static SignInPage visit(AndroidDriver driver) {
         driver.get("http://a.testaddressbook.com/sign_in");
-
         return new SignInPage(driver);
     }
 
     public SignInPage(AndroidDriver driver) {
-        this.driver = driver;
-        PageFactory.initElements(driver, this);
+        super(driver);
     }
 
     public void signIn(UserData user) {
-        wait = new WebDriverWait(driver, 10);
-
-        wait.until(ExpectedConditions.visibilityOf(emailField)).
-                sendKeys(user.getEmail());
-        passwordField.sendKeys(user.getPassword());
-        submit.click();
+        sendKeys(emailField, user.getEmail());
+        sendKeys(passwordField, user.getPassword());
+        click(submit);
     }
 
     public Boolean hasAlertNotice() {
