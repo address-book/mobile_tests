@@ -27,8 +27,13 @@ public class BaseTest {
         capabilities.setCapability("platformName", platform.get("platformName"));
         capabilities.setCapability("platformVersion", platform.get("platformVersion"));
         capabilities.setCapability("deviceName", platform.get("deviceName"));
-        capabilities.setCapability("browserName", platform.get("browserName"));
-        capabilities.setCapability("appiumVersion", platform.get("appiumVersion"));
+
+        if (platform.get("browserName") == null) {
+            capabilities.setCapability("app", platform.get("app"));
+            capabilities.setCapability("appWaitActivity", platform.get("appWaitActivity"));
+        } else {
+            capabilities.setCapability("browserName", platform.get("browserName"));
+        }
 
         return capabilities;
     }
@@ -55,7 +60,7 @@ public class BaseTest {
 
             url = "https://" + USER + ":" + KEY + "@ondemand.saucelabs.com/wd/hub";
         } else {
-            String platform = (platformProperty != null) ? platformProperty : "androidChrome";
+            String platform = (platformProperty != null) ? platformProperty : "androidApp";
             capabilities = createCapabilities(platform);
             url = "http://localhost:4723/wd/hub";
         }
