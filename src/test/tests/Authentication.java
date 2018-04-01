@@ -62,22 +62,13 @@ public class Authentication {
 
     @Test
     public void signInSuccessful() {
-        HomePage homePage = new HomePage(driver);
+        HomePage homePage = HomePage.visit(driver);
+        SignInPage signInPage = homePage.navigateToSignIn();
 
-        homePage.visit();
-        homePage.getMenuButton().click();
-        SignInPage signInPage = homePage.getSignInLink().click();
-
-        signInPage.waitFor(homePage.getEmailElement);
         UserData userData = UserData.validUser();
+        HomePage homePage1 = signInPage.signIn(userData);
 
-        signInPage.getEmailElement().sendKeys(userData.getEmail());
-        signInPage.getPasswordElement().sendKeys(userData.getPassword());
-        HomePage homePage2 = signInPage.getSubmitButton().click();
-
-        Boolean currentUser = homePage2.isElementPresent(homPage.getCurrentUser);
-
-        assertTrue(currentUser);
+        assertTrue(homePage1.isSignedIn("user@example.com"));
     }
 
     @Test
