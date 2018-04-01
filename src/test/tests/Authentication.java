@@ -7,11 +7,7 @@ import io.appium.java_client.android.AndroidDriver;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebElement;
 import org.openqa.selenium.remote.DesiredCapabilities;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -19,13 +15,12 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Map;
 
-import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
+import static org.testng.Assert.assertFalse;
 
 public class Authentication {
 
     private AndroidDriver driver;
-    private WebDriverWait wait;
 
     private static DesiredCapabilities createCapabilities(String value) throws FileNotFoundException {
         FileReader file = new FileReader("src/test/config/platforms.yml");
@@ -51,8 +46,6 @@ public class Authentication {
 
         driver = new AndroidDriver<>(
                 new URL("http://localhost:4723/wd/hub"), capabilities);
-
-        wait = new WebDriverWait(driver, 10);
     }
 
     @AfterMethod
@@ -68,49 +61,49 @@ public class Authentication {
         UserData userData = UserData.validUser();
         HomePage homePage1 = signInPage.signIn(userData);
 
-        assertTrue(homePage1.isSignedIn("user@example.com"));
+        assertTrue(homePage1.isSignedIn(userData.getEmail()));
     }
 
     @Test
     public void signInBlankPasswordUnsuccessful() {
-        driver.get("http://a.testaddressbook.com/sign_in");
+        //
+        // Rewrite Test Declaratively
+        //
 
-        // Add Action Code
-
-        WebElement emailElement = wait.until(
-                ExpectedConditions.presenceOfElementLocated(
-                        By.id("session_email")));
-
-        UserData userData = UserData.blankPassword();
-
-        emailElement.sendKeys(userData.getEmail());
-        driver.findElement(By.id("session_password")).sendKeys(userData.getPassword());
-        driver.findElement(By.name("commit")).click();
-
-        // Add Assertion Code
-
-        By alertNotice = By.className("alert-notice");
-        assertEquals(1, driver.findElements(alertNotice).size());
-
-        By currentUser = By.cssSelector("span[data-test=current-user]");
-        assertEquals(0, driver.findElements(currentUser).size());
+//        driver.get("http://a.testaddressbook.com/sign_in");
+//
+//        WebElement emailElement = wait.until(
+//                ExpectedConditions.presenceOfElementLocated(
+//                        By.id("session_email")));
+//
+//        UserData userData = UserData.blankPassword();
+//
+//        emailElement.sendKeys(userData.getEmail());
+//        driver.findElement(By.id("session_password")).sendKeys(userData.getPassword());
+//        driver.findElement(By.name("commit")).click();
+//
+//        By alertNotice = By.className("alert-notice");
+//        assertEquals(1, driver.findElements(alertNotice).size());
+//
+//        By currentUser = By.cssSelector("span[data-test=current-user]");
+//        assertEquals(0, driver.findElements(currentUser).size());
     }
 
     @Test
     public void signUpSuccessfully() {
-        driver.get("http://a.testaddressbook.com/sign_up");
+        //
+        // Rewrite Test Declaratively
+        //
 
-        // Add Action Code
-
-        UserData userData = UserData.randomUser();
-
-        driver.findElement(By.id("user_email")).sendKeys(userData.getEmail());
-        driver.findElement(By.id("user_password")).sendKeys(userData.getPassword());
-        driver.findElement(By.name("commit")).click();
-
-        // Add Assertion Code
-
-        assertEquals("Address Book", driver.getTitle());
+//        driver.get("http://a.testaddressbook.com/sign_up");
+//
+//        UserData userData = UserData.randomUser();
+//
+//        driver.findElement(By.id("user_email")).sendKeys(userData.getEmail());
+//        driver.findElement(By.id("user_password")).sendKeys(userData.getPassword());
+//        driver.findElement(By.name("commit")).click();
+//
+//        assertEquals("Address Book", driver.getTitle());
     }
 
 }
