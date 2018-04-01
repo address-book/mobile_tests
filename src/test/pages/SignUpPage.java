@@ -1,14 +1,12 @@
 package test.pages;
 
+import test.data.UserData;
+
 import io.appium.java_client.android.AndroidDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
-import org.openqa.selenium.support.PageFactory;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
-import test.data.UserData;
 
-public class SignUpPage {
+public class SignUpPage extends BasePage {
     private AndroidDriver driver;
 
     @FindBy(id = "user_email")

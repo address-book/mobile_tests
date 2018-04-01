@@ -19,6 +19,14 @@ class BasePage {
         waitForElement(element).click();
     }
 
+    String getText(WebElement element) {
+        return waitForElement(element).getText();
+    }
+
+    void sendKeys(WebElement element, String text) {
+        waitForElement(element).sendKeys(text);
+    }
+
     void waitForPage(String url) {
         wait = new WebDriverWait(driver, 30);
         wait.until(ExpectedConditions.urlMatches(url));
