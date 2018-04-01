@@ -1,5 +1,6 @@
 package test.tests;
 
+import org.yaml.snakeyaml.Yaml;
 import test.data.UserData;
 
 import io.appium.java_client.android.AndroidDriver;
@@ -12,8 +13,11 @@ import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.Map;
 
 import static org.junit.Assert.assertEquals;
 
@@ -22,13 +26,27 @@ public class Authentication {
     private AndroidDriver driver;
     private WebDriverWait wait;
 
-    @BeforeMethod
-    public void setup() throws MalformedURLException {
+    private static DesiredCapabilities createCapabilities(String value) throws FileNotFoundException {
+        FileReader file = new FileReader("src/test/config/platforms.yml");
+        Map<String, Object> platforms = new Yaml().load(file);
+
+        Map<String, Object> platform = (Map<String, Object>) platforms.get(value);
         DesiredCapabilities capabilities = new DesiredCapabilities();
-        capabilities.setCapability("platformName", "Android");
-        capabilities.setCapability("platformVersion", "8.1");
-        capabilities.setCapability("deviceName", "Android_Emulator");
-        capabilities.setCapability("browserName", "Chrome");
+        capabilities.setCapability("platformName", platform.get("platformName"));
+        capabilities.setCapability("platformVersion", platform.get("platformVersion"));
+        capabilities.setCapability("deviceName", platform.get("deviceName"));
+        capabilities.setCapability("browserName", platform.get("browserName"));
+
+        return capabilities;
+    }
+
+    @BeforeMethod
+    public void setup() throws MalformedURLException, FileNotFoundException {
+
+        String platformProperty = System.getProperty("PLATFORM");
+        String platform = (platformProperty != null) ? platformProperty : "androidChrome";
+
+        DesiredCapabilities capabilities = createCapabilities(platform);
 
         driver = new AndroidDriver<>(
                 new URL("http://localhost:4723/wd/hub"), capabilities);

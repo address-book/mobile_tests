@@ -1,0 +1,5 @@
+androidChrome:
+  platformName: Android
+  platformVersion: 8.1
+  deviceName: Android_Emulator
+  browserName: Chrome
