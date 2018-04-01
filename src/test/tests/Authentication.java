@@ -67,9 +67,7 @@ public class Authentication {
     public void signInBlankPasswordUnsuccessful() {
         // Fix Test
 
-        HomePage homePage = HomePage.visit(driver);
-        SignInPage signInPage = homePage.navigateToSignIn();
-
+        SignInPage signInPage = SignInPage.visit(driver);
         signInPage.signIn(UserData.blankPassword());
 
         assertTrue(signInPage.hasAlertNotice());
@@ -80,13 +78,11 @@ public class Authentication {
     public void signUpSuccessfully() {
         // Fix Test
 
-        HomePage homePage = HomePage.visit(driver);
-        SignInPage signInPage = homePage.navigateToSignIn();
-        SignUpPage signUpPage = signInPage.navigateToSignUp();
+        SignUpPage signUpPage = SignUpPage.visit(driver);
+        signUpPage.signUp(UserData.randomUser());
 
-        HomePage homePage1 = signUpPage.signUp(UserData.randomUser());
-
-        assertTrue(homePage1.isSignedIn());
+        HomePage homePage = new HomePage(driver);
+        assertTrue(homePage.isSignedIn());
     }
 
 }
