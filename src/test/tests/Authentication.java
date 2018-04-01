@@ -59,8 +59,7 @@ public class Authentication {
         HomePage homePage = HomePage.visit(driver);
         SignInPage signInPage = homePage.navigateToSignIn();
 
-        UserData userData = UserData.validUser();
-        HomePage homePage1 = signInPage.signIn(userData);
+        HomePage homePage1 = signInPage.signInSuccessfully(UserData.validUser());
 
         assertTrue(homePage1.isSignedIn());
     }
@@ -70,11 +69,10 @@ public class Authentication {
         HomePage homePage = HomePage.visit(driver);
         SignInPage signInPage = homePage.navigateToSignIn();
 
-        UserData userData = UserData.blankPassword();
-        HomePage homePage1 = signInPage.signIn(userData);
+        SignInPage signInPage1 = signInPage.signInFailing(UserData.blankPassword());
 
-        assertTrue(signInPage.hasAlertNotice());
-        assertFalse(homePage1.isSignedIn());
+        assertTrue(signInPage1.hasAlertNotice());
+        assertFalse(HomePage.visit(driver).isSignedIn());
     }
 
     @Test
@@ -83,8 +81,7 @@ public class Authentication {
         SignInPage signInPage = homePage.navigateToSignIn();
         SignUpPage signUpPage = signInPage.navigateToSignUp();
 
-        UserData userData = UserData.randomUser();
-        HomePage homePage1 = signUpPage.signUp(userData);
+        HomePage homePage1 = signUpPage.signUp(UserData.randomUser());
 
         assertTrue(homePage1.isSignedIn());
     }

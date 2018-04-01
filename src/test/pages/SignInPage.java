@@ -12,6 +12,7 @@ import java.util.List;
 
 public class SignInPage {
     private AndroidDriver driver;
+    private WebDriverWait wait;
 
     @FindBy(css = "a[data-test=sign-up]")
     private WebElement signUpLink;
@@ -40,14 +41,23 @@ public class SignInPage {
         return new SignUpPage(driver);
     }
 
-    public HomePage signIn(UserData user) {
-        WebDriverWait wait = new WebDriverWait(driver, 10);
+    public HomePage signInSuccessfully(UserData user) {
+        submitForm(user);
+        return new HomePage(driver);
+    }
 
-        wait.until(ExpectedConditions.visibilityOf(emailField)).sendKeys(user.getEmail());
+    public SignInPage signInFailing(UserData user) {
+        submitForm(user);
+        return new SignInPage(driver);
+    }
+
+    private void submitForm(UserData user) {
+        wait = new WebDriverWait(driver, 10);
+
+        wait.until(ExpectedConditions.visibilityOf(emailField)).
+                sendKeys(user.getEmail());
         passwordField.sendKeys(user.getPassword());
         submit.click();
-
-        return new HomePage(driver);
     }
 
     public Boolean hasAlertNotice() {
