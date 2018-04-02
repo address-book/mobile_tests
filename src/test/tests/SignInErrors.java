@@ -14,7 +14,7 @@ public class SignInErrors extends BaseTest {
         SignInPage signInPage = SignInPage.visit(driver);
         signInPage.signIn(UserData.blankPassword());
 
-        assertTrue(signInPage.hasAlertNotice());
-        assertFalse(HomePage.visit(driver).isSignedIn());
+        assertTrue(signInPage.hasAlertNotice(true));
+        assertFalse(HomePage.visit(driver).isSignedIn(false));
     }
 }

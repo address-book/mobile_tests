@@ -16,7 +16,7 @@ public class HomePage extends BasePage {
     private static WebElement signIn;
 
     @FindBy(css = "span[data-test=current-user]")
-    private static List<WebElement> users;
+    private static WebElement user;
 
     @AndroidFindBy(xpath = "//*[@resource-id='navbar']//*")
     private static List<WebElement> navitems;
@@ -37,11 +37,13 @@ public class HomePage extends BasePage {
         getElement(signIn).click();
     }
 
-    public Boolean isSignedIn() {
+    public Boolean isSignedIn(Boolean condition) {
         getElement(menu).click();
         if (!driver.getContext().equals("NATIVE_APP")) {
-            waitForPage("http://a.testaddressbook.com");
-            return ((Integer) users.size()).equals(1);
+            if (condition) {
+                getElement(user).waitForPresent();
+            }
+            return exists(user);
         } else {
             return ((Integer) navitems.size()).equals(4);
         }

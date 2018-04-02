@@ -14,6 +14,6 @@ public class SignInSuccess extends BaseTest {
         signInPage.signIn(UserData.validUser());
 
         HomePage homePage = new HomePage(driver);
-        assertTrue(homePage.isSignedIn());
+        assertTrue(homePage.isSignedIn(true));
     }
 }

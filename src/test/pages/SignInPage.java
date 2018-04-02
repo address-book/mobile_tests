@@ -22,7 +22,7 @@ public class SignInPage extends BasePage {
 
     @FindBy(className = "alert")
     @AndroidFindBy(xpath = "//android.view.View[@content-desc='Bad email or password.' or @text='Bad email or password.']")
-    private static List<WebElement> alerts;
+    private static WebElement alert;
 
     @AndroidFindBy(xpath = "//android.view.View[@content-desc='Sign up' or @text='Sign up']")
     private static WebElement signUp;
@@ -51,7 +51,10 @@ public class SignInPage extends BasePage {
         getElement(signUp).click();
     }
 
-    public Boolean hasAlertNotice() {
-        return ((Integer) alerts.size()).equals(1);
+    public Boolean hasAlertNotice(Boolean condition) {
+        if (condition) {
+            getElement(alert).waitForPresent();
+        }
+        return exists(alert);
     }
 }

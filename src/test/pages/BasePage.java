@@ -1,5 +1,7 @@
 package test.pages;
 
+import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.NoSuchElementException;
 import test.element.BaseElement;
 
 import io.appium.java_client.android.AndroidDriver;
@@ -27,6 +29,16 @@ class BasePage {
 
     BaseElement getElement(WebElement element) {
         return new BaseElement(driver, element);
+    }
+
+    Boolean exists(WebElement element) {
+        try {
+            // any wire call will work
+            element.isEnabled();
+            return true;
+        } catch (NoSuchElementException e) {
+            return false;
+        }
     }
 }
 

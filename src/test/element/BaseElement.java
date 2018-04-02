@@ -23,7 +23,7 @@ public class BaseElement {
                 element.click();
                 return;
             } catch (NoSuchElementException | ElementNotVisibleException e) {
-                waitForElement(element);
+                waitForPresent();
             }
         }
     }
@@ -34,13 +34,13 @@ public class BaseElement {
                 element.sendKeys(text);
                 return;
             } catch (NoSuchElementException | ElementNotVisibleException e) {
-                waitForElement(element);
+                waitForPresent();
             }
         }
     }
 
-    private void waitForElement(WebElement element) {
-        wait = new WebDriverWait(driver, 30);
+    public void waitForPresent() {
+        wait = new WebDriverWait(driver, 5);
         wait.until(ExpectedConditions.visibilityOf(element));
     }
 
