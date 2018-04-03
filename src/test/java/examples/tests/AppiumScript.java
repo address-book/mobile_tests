@@ -12,7 +12,7 @@ import java.net.URL;
 public class AppiumScript {
 
     @Test
-    public void signIn() throws MalformedURLException {
+    public void signIn() throws MalformedURLException, InterruptedException {
         DesiredCapabilities capabilities = new DesiredCapabilities();
         capabilities.setCapability("platformName", "Android");
         capabilities.setCapability("platformVersion", "8.1");
@@ -25,6 +25,8 @@ public class AppiumScript {
         driver.get("http://a.testaddressbook.com");
         driver.findElement(By.tagName("button")).click();
         driver.findElement(By.id("sign-in")).click();
+
+        Thread.sleep(5000);
 
         driver.findElement(By.id("session_email")).sendKeys("user@example.com");
         driver.findElement(By.id("session_password")).sendKeys("password");
