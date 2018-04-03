@@ -2,20 +2,15 @@ package examples.tests;
 
 import io.appium.java_client.android.AndroidDriver;
 import org.openqa.selenium.By;
-import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.remote.DesiredCapabilities;
 
-import org.openqa.selenium.support.ui.FluentWait;
-import org.openqa.selenium.support.ui.Wait;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.annotations.Test;
 
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.function.Function;
-
-import static java.util.concurrent.TimeUnit.MICROSECONDS;
-import static java.util.concurrent.TimeUnit.SECONDS;
 
 public class AppiumScript {
 
@@ -34,17 +29,11 @@ public class AppiumScript {
         driver.findElement(By.tagName("button")).click();
         driver.findElement(By.id("sign-in")).click();
 
-        Wait fluentWait = new FluentWait(driver)
-                .withTimeout(5, SECONDS)
-                .pollingEvery(500, MICROSECONDS)
-                .ignoring(NoSuchElementException.class);
+        WebDriverWait wait = new WebDriverWait(driver, 10);
 
-        WebElement emailElement = (WebElement) fluentWait
-                .until(new Function<AndroidDriver, WebElement>() {
-                    public WebElement apply(AndroidDriver driver) {
-                        return driver.findElement(By.id("session_email"));
-                    }
-                });
+        WebElement emailElement = wait.until(
+                ExpectedConditions.presenceOfElementLocated(
+                        By.id("session_email")));
 
         emailElement.sendKeys("user@example.com");
         driver.findElement(By.id("session_password")).sendKeys("password");
