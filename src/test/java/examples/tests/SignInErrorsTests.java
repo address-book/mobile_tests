@@ -30,9 +30,24 @@ public class SignInErrorsTests {
         driver.findElement(By.tagName("button")).click();
         driver.findElement(By.id("sign-in")).click();
 
-        // Add Action Code
+        WebDriverWait wait = new WebDriverWait(driver, 10);
 
-        // Add Assertion Code
+        WebElement emailElement = wait.until(
+                ExpectedConditions.presenceOfElementLocated(
+                        By.id("session_email")));
+
+        emailElement.sendKeys("user@example.com");
+        driver.findElement(By.id("session_password")).sendKeys("");
+        driver.findElement(By.name("commit")).click();
+
+        By alertNotice = By.className("alert-notice");
+        assertEquals(1, driver.findElements(alertNotice).size());
+
+        assertEquals("Address Book - Sign In", driver.getTitle());
+        assertEquals("http://a.testaddressbook.com/session", driver.getCurrentUrl());
+
+        By currentUser = By.cssSelector("span[data-test=current-user]");
+        assertEquals(0, driver.findElements(currentUser).size());
 
         driver.quit();
     }
