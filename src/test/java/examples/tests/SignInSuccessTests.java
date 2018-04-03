@@ -7,15 +7,17 @@ import org.openqa.selenium.remote.DesiredCapabilities;
 
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+
 import org.testng.annotations.Test;
+import static org.testng.Assert.assertEquals;
 
 import java.net.MalformedURLException;
 import java.net.URL;
 
-public class AppiumScript {
+public class SignInSuccessTests {
 
     @Test
-    public void signIn() throws MalformedURLException {
+    public void signInSuccessful() throws MalformedURLException {
         DesiredCapabilities capabilities = new DesiredCapabilities();
         capabilities.setCapability("platformName", "Android");
         capabilities.setCapability("platformVersion", "8.1");
@@ -38,6 +40,12 @@ public class AppiumScript {
         emailElement.sendKeys("user@example.com");
         driver.findElement(By.id("session_password")).sendKeys("password");
         driver.findElement(By.name("commit")).click();
+
+        assertEquals("Address Book", driver.getTitle());
+        assertEquals("http://a.testaddressbook.com/", driver.getCurrentUrl());
+
+        By currentUser = By.cssSelector("span[data-test=current-user]");
+        assertEquals(1, driver.findElements(currentUser).size());
 
         driver.quit();
     }
