@@ -3,16 +3,11 @@ package examples.tests;
 import examples.data.*;
 
 import io.appium.java_client.android.AndroidDriver;
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebElement;
 import org.openqa.selenium.remote.DesiredCapabilities;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
 
 import org.yaml.snakeyaml.Yaml;
 
 import org.testng.annotations.Test;
-import static org.testng.Assert.assertEquals;
 
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -41,27 +36,22 @@ public class SignInSuccessTests {
         AndroidDriver driver = new AndroidDriver<>(
                 new URL("http://localhost:4723/wd/hub"), capabilities);
 
-        driver.get("http://a.testaddressbook.com");
-        driver.findElement(By.tagName("button")).click();
-        driver.findElement(By.id("sign-in")).click();
+        HomePage homePage = new HomePage(driver);
 
-        WebDriverWait wait = new WebDriverWait(driver, 10);
+        homePage.visit();
+        homePage.getMenuButton().click();
+        SignInPage signInPage = homePage.getSignInLink().click();
 
-        WebElement emailElement = wait.until(
-                ExpectedConditions.presenceOfElementLocated(
-                        By.id("session_email")));
-
+        signInPage.waitFor(homePage.getEmailElement);
         UserData userData = UserData.validUser();
 
-        emailElement.sendKeys(userData.getEmail());
-        driver.findElement(By.id("session_password")).sendKeys(userData.getPassword());
-        driver.findElement(By.name("commit")).click();
+        signInPage.getEmailElement().sendKeys(userData.getEmail());
+        signInPage.getPasswordElement().sendKeys(userData.getPassword());
+        HomePage homePage2 = signInPage.getSubmitButton().click();
 
-        assertEquals("Address Book", driver.getTitle());
-        assertEquals("http://a.testaddressbook.com/", driver.getCurrentUrl());
+        Boolean currentUser = homePage2.isElementPresent(homPage.getCurrentUser);
 
-        By currentUser = By.cssSelector("span[data-test=current-user]");
-        assertEquals(1, driver.findElements(currentUser).size());
+        assertTrue(currentUser);
 
         driver.quit();
     }
