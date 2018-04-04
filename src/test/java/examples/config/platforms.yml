@@ -1,0 +1,5 @@
+androidChromeLocal:
+  platformName: Android
+  platformVersion: "8.1"
+  deviceName: Nexus
+  browserName: Chrome
