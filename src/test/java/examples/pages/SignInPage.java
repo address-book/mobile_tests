@@ -3,19 +3,12 @@ package examples.pages;
 import examples.data.*;
 
 import io.appium.java_client.android.AndroidDriver;
-import org.openqa.selenium.NotFoundException;
 import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
-
-import org.awaitility.core.ConditionTimeoutException;
-
-import static org.awaitility.Awaitility.await;
-
-import static java.util.concurrent.TimeUnit.SECONDS;
 
 public class SignInPage extends BasePage {
     @FindBy(css = "a[data-test=sign-up]")
@@ -40,8 +33,7 @@ public class SignInPage extends BasePage {
     }
 
     public SignInPage(AndroidDriver driver) {
-        this.driver = driver;
-        PageFactory.initElements(driver, this);
+        super(driver);
     }
 
     public void signInSuccessfully(UserData user) {
@@ -58,25 +50,16 @@ public class SignInPage extends BasePage {
     }
 
     private void signIn(UserData user) {
-        WebDriverWait wait = new WebDriverWait(driver, 10);
-
-        wait.until(ExpectedConditions.visibilityOf(emailField)).sendKeys(user.getEmail());
-        passwordField.sendKeys(user.getPassword());
-        submit.click();
+        sendKeys(emailField, user.getEmail());
+        sendKeys(passwordField, user.getPassword());
+        click(submit);
     }
 
     public void navigateToSignUp() {
-        WebDriverWait wait = new WebDriverWait(driver, 10);
-        wait.until(ExpectedConditions.visibilityOf(signUpLink)).click();
+        click(signUpLink);
     }
 
     public Boolean hasAlertNotice() {
-        WebDriverWait wait = new WebDriverWait(driver, 10);
-        try {
-            wait.until(ExpectedConditions.visibilityOf(alert)).click();
-            return true;
-        } catch (TimeoutException e) {
-            return false;
-        }
+        return eventuallyExists(alert);
     }
 }

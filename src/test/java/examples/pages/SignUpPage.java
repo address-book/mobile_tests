@@ -3,17 +3,12 @@ package examples.pages;
 import examples.data.*;
 
 import io.appium.java_client.android.AndroidDriver;
-import org.awaitility.core.ConditionTimeoutException;
-import org.openqa.selenium.NotFoundException;
-import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
-import static java.util.concurrent.TimeUnit.SECONDS;
-import static org.awaitility.Awaitility.await;
 
 public class SignUpPage extends BasePage {
     @FindBy(id = "user_email")
@@ -32,16 +27,13 @@ public class SignUpPage extends BasePage {
     }
 
     public SignUpPage(AndroidDriver driver) {
-        this.driver = driver;
-        PageFactory.initElements(driver, this);
+        super(driver);
     }
 
     public void signUp(UserData user) {
-        WebDriverWait wait = new WebDriverWait(driver, 10);
-
-        wait.until(ExpectedConditions.visibilityOf(emailField)).sendKeys(user.getEmail());
-        passwordField.sendKeys(user.getPassword());
-        submit.click();
+        sendKeys(emailField, user.getEmail());
+        sendKeys(passwordField, user.getPassword());
+        click(submit);
 
         waitWhileElementPresent(submit,
                 "Form should have been submitted, but it appears not to have worked");
