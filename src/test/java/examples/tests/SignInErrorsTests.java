@@ -1,6 +1,7 @@
 package examples.tests;
 
 import examples.data.*;
+import examples.pages.*;
 
 import io.appium.java_client.android.AndroidDriver;
 import org.openqa.selenium.remote.DesiredCapabilities;
@@ -42,9 +43,9 @@ public class SignInErrorsTests {
 
         HomePage homePage = HomePage.visit(driver);
         SignInPage signInPage = homePage.navigateToSignIn();
-        HomePage homePage2 = signInPage.signIn(UserData.blankPassword());
+        SignInPage signInPage2 = signInPage.signInUnsuccessfully(UserData.blankPassword());
 
-        assertTrue(signInPage.hasAlertNotice());
+        assertTrue(signInPage2.hasAlertNotice());
         assertFalse(HomePage.visit(driver).isSignedIn());
 
         driver.quit();

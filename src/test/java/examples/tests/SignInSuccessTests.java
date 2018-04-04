@@ -40,7 +40,7 @@ public class SignInSuccessTests {
         HomePage homePage = HomePage.visit(driver);
         SignInPage signInPage = homePage.navigateToSignIn();
 
-        HomePage homePage2 = signInPage.signIn(UserData.validUser());
+        HomePage homePage2 = signInPage.signInSuccessfully(UserData.validUser());
 
         assertTrue(homePage2.isSignedIn());
 
