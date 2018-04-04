@@ -9,3 +9,16 @@ androidChromeSauce:
   deviceName: Android GoogleAPI Emulator
   browserName: Chrome
   appiumVersion: "1.7.2"
+androidAppLocal:
+  platformName: Android
+  platformVersion: "8.1"
+  deviceName: Nexus
+  app: https://github.com/address-book/mobile_apps/blob/master/AddressBook.apk?raw=true
+  appWaitActivity: com.address.book.MainActivity
+  appiumVersion: "1.7.2"
+androidAppSauce:
+  platformName: Android
+  platformVersion: "7.1"
+  deviceName: Android GoogleAPI Emulator
+  app: https://github.com/address-book/mobile_apps/blob/master/AddressBook.apk?raw=true
+  appWaitActivity: com.address.book.MainActivity

@@ -39,7 +39,7 @@ public class Element {
         }
     }
 
-    public Boolean exits() {
+    public Boolean exists() {
         try {
             element.isEnabled(); // any wire call will work
             return true;
@@ -59,7 +59,7 @@ public class Element {
 
     public void waitWhilePresent(String message) {
         try {
-            await().atMost(30, SECONDS).until(() -> !exits());
+            await().atMost(30, SECONDS).until(() -> !exists());
         } catch (ConditionTimeoutException e) {
             throw new TimeoutException(message, e);
         }
@@ -67,7 +67,7 @@ public class Element {
 
     public void waitUntilPresent(String message) {
         try {
-            await().atMost(30, SECONDS).until(() -> exits());
+            await().atMost(30, SECONDS).until(() -> exists());
         } catch (ConditionTimeoutException e) {
             throw new TimeoutException(message, e);
         }

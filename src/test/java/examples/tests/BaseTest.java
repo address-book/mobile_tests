@@ -39,7 +39,7 @@ public class BaseTest {
         String platformProperty = System.getProperty("PLATFORM");
 
         if (useSauce) {
-            String platform = (platformProperty != null) ? platformProperty : "androidChromeSauce";
+            String platform = (platformProperty != null) ? platformProperty : "androidAppSauce";
             capabilities = createCapabilities(platform);
 
             String USER = System.getenv("SAUCE_USERNAME");
@@ -53,7 +53,7 @@ public class BaseTest {
 
             url = "https://" + USER + ":" + KEY + "@ondemand.saucelabs.com/wd/hub";
         } else {
-            String platform = (platformProperty != null) ? platformProperty : "androidChromeLocal";
+            String platform = (platformProperty != null) ? platformProperty : "androidAppLocal";
             capabilities = createCapabilities(platform);
             url = "http://localhost:4723/wd/hub";
         }

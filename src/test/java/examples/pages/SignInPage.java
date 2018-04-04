@@ -3,11 +3,13 @@ package examples.pages;
 import examples.data.*;
 
 import io.appium.java_client.android.AndroidDriver;
+import io.appium.java_client.pagefactory.AndroidFindBy;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
 public class SignInPage extends BasePage {
     @FindBy(css = "a[data-test=sign-up]")
+    @AndroidFindBy(xpath = "//android.view.View[@content-desc='Sign up' or @text='Sign up']")
     private WebElement signUpLink;
 
     @FindBy(id = "session_email")
@@ -17,14 +19,21 @@ public class SignInPage extends BasePage {
     private WebElement passwordField;
 
     @FindBy(name = "commit")
+    @AndroidFindBy(xpath = "//android.widget.Button[@content-desc='Sign in' or @text='Sign in']")
     private WebElement submit;
 
     @FindBy(className = "alert")
+    @AndroidFindBy(xpath = "//android.view.View[@content-desc='Bad email or password.' or @text='Bad email or password.']")
     private WebElement alert;
 
 
     public static SignInPage visit(AndroidDriver driver) {
-        driver.get("http://a.testaddressbook.com/sign_in");
+        if (isNative(driver)) {
+            HomePage homePage = HomePage.visit(driver);
+            homePage.navigateToSignIn();
+        } else {
+            driver.get("http://a.testaddressbook.com/sign_in");
+        }
         return new SignInPage(driver);
     }
 
