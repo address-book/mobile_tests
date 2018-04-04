@@ -8,6 +8,7 @@ import org.openqa.selenium.remote.DesiredCapabilities;
 import org.yaml.snakeyaml.Yaml;
 
 import org.testng.annotations.Test;
+import static org.testng.Assert.assertTrue;
 
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -36,22 +37,12 @@ public class SignInSuccessTests {
         AndroidDriver driver = new AndroidDriver<>(
                 new URL("http://localhost:4723/wd/hub"), capabilities);
 
-        HomePage homePage = new HomePage(driver);
+        HomePage homePage = HomePage.visit(driver);
+        SignInPage signInPage = homePage.navigateToSignIn();
 
-        homePage.visit();
-        homePage.getMenuButton().click();
-        SignInPage signInPage = homePage.getSignInLink().click();
+        HomePage homePage2 = signInPage.signIn(UserData.validUser());
 
-        signInPage.waitFor(homePage.getEmailElement);
-        UserData userData = UserData.validUser();
-
-        signInPage.getEmailElement().sendKeys(userData.getEmail());
-        signInPage.getPasswordElement().sendKeys(userData.getPassword());
-        HomePage homePage2 = signInPage.getSubmitButton().click();
-
-        Boolean currentUser = homePage2.isElementPresent(homPage.getCurrentUser);
-
-        assertTrue(currentUser);
+        assertTrue(homePage2.isSignedIn());
 
         driver.quit();
     }
