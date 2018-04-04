@@ -27,10 +27,10 @@ public class SignUpTests {
 
         driver.get("http://a.testaddressbook.com/sign_up");
 
-        // Define email and password
+        UserData userData = UserData.randomUser();
 
-        driver.findElement(By.id("user_email")).sendKeys(email);
-        driver.findElement(By.id("user_password")).sendKeys(password);
+        driver.findElement(By.id("user_email")).sendKeys(userData.getEmail());
+        driver.findElement(By.id("user_password")).sendKeys(userData.getPassword());
         driver.findElement(By.name("commit")).click();
 
         assertEquals("Address Book", driver.getTitle());

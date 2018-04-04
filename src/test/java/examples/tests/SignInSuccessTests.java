@@ -39,10 +39,10 @@ public class SignInSuccessTests {
                 ExpectedConditions.presenceOfElementLocated(
                         By.id("session_email")));
 
-        // Define email and password
+        UserData userData = UserData.validUser();
 
-        emailElement.sendKeys(email);
-        driver.findElement(By.id("session_password")).sendKeys(password);
+        emailElement.sendKeys(userData.getEmail());
+        driver.findElement(By.id("session_password")).sendKeys(userData.getPassword());
         driver.findElement(By.name("commit")).click();
 
         assertEquals("Address Book", driver.getTitle());
