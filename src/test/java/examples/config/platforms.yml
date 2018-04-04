@@ -3,3 +3,9 @@ androidChromeLocal:
   platformVersion: "8.1"
   deviceName: Nexus
   browserName: Chrome
+androidChromeSauce:
+  platformName: Android
+  platformVersion: "7.1"
+  deviceName: Android GoogleAPI Emulator
+  browserName: Chrome
+  appiumVersion: "1.7.2"
