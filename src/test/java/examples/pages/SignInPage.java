@@ -3,12 +3,19 @@ package examples.pages;
 import examples.data.*;
 
 import io.appium.java_client.android.AndroidDriver;
+import org.openqa.selenium.NotFoundException;
 import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+
+import org.awaitility.core.ConditionTimeoutException;
+
+import static org.awaitility.Awaitility.await;
+
+import static java.util.concurrent.TimeUnit.SECONDS;
 
 public class SignInPage {
     private AndroidDriver driver;
@@ -35,21 +42,22 @@ public class SignInPage {
     }
 
     public void signInSuccessfully(UserData user) {
-        WebDriverWait wait = new WebDriverWait(driver, 10);
-
-        wait.until(ExpectedConditions.visibilityOf(emailField)).sendKeys(user.getEmail());
-        passwordField.sendKeys(user.getPassword());
-        submit.click();
+        signIn(user);
+        waitWhileElementPresent(submit,
+                "Form should have been submitted, but it appears not to have worked");
     }
 
     public SignInPage signInUnsuccessfully(UserData user) {
+        signIn(user);
+        return new SignInPage(driver);
+    }
+
+    private void signIn(UserData user) {
         WebDriverWait wait = new WebDriverWait(driver, 10);
 
         wait.until(ExpectedConditions.visibilityOf(emailField)).sendKeys(user.getEmail());
         passwordField.sendKeys(user.getPassword());
         submit.click();
-
-        return new SignInPage(driver);
     }
 
     public SignUpPage navigateToSignUp() {
@@ -65,6 +73,31 @@ public class SignInPage {
             wait.until(ExpectedConditions.visibilityOf(alert)).click();
             return true;
         } catch (TimeoutException e) {
+            return false;
+        }
+    }
+
+    private void waitWhileElementPresent(WebElement element, String message) {
+        try {
+            await().atMost(30, SECONDS).until(() -> !exits(element));
+        } catch (ConditionTimeoutException e) {
+            throw new TimeoutException(message, e);
+        }
+    }
+
+    private void waitUntilElementPresent(WebElement element, String message) {
+        try {
+            await().atMost(30, SECONDS).until(() -> exits(element));
+        } catch (ConditionTimeoutException e) {
+            throw new TimeoutException(message, e);
+        }
+    }
+
+    private Boolean exits(WebElement element) {
+        try {
+            element.isEnabled(); // any wire call will work
+            return true;
+        } catch (NotFoundException e) {
             return false;
         }
     }
