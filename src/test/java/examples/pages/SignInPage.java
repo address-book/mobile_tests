@@ -36,6 +36,12 @@ public class SignInPage {
     private WebElement alert;
 
 
+    public static SignInPage visit(AndroidDriver driver) {
+        HomePage homePage = HomePage.visit(driver);
+        homePage.navigateToSignIn();
+        return new SignInPage(driver);
+    }
+
     public SignInPage(AndroidDriver driver) {
         this.driver = driver;
         PageFactory.initElements(driver, this);

@@ -38,12 +38,10 @@ public class SignInSuccessTests {
         AndroidDriver driver = new AndroidDriver<>(
                 new URL("http://localhost:4723/wd/hub"), capabilities);
 
-        HomePage homePage = HomePage.visit(driver);
-        homePage.navigateToSignIn();
-
-        SignInPage signInPage = new SignInPage(driver);
+        SignInPage signInPage = SignInPage.visit(driver);
         signInPage.signInSuccessfully(UserData.validUser());
 
+        HomePage homePage = new HomePage(driver);
         assertTrue(homePage.isSignedIn());
 
         driver.quit();
