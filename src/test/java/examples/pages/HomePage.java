@@ -1,7 +1,7 @@
 package examples.pages;
 
 import io.appium.java_client.android.AndroidDriver;
-import org.openqa.selenium.NoSuchElementException;
+import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
@@ -41,9 +41,20 @@ public class HomePage {
         WebDriverWait wait = new WebDriverWait(driver, 10);
         wait.until(ExpectedConditions.visibilityOf(menu)).click();
         try {
-            user.isEnabled();  // any wire call works
+            wait.until(ExpectedConditions.visibilityOf(user));
             return true;
-        } catch (NoSuchElementException e) {
+        } catch (TimeoutException e) {
+            return false;
+        }
+    }
+
+    public Boolean isNotSignedIn() {
+        WebDriverWait wait = new WebDriverWait(driver, 10);
+        wait.until(ExpectedConditions.visibilityOf(menu)).click();
+        try {
+            wait.until(ExpectedConditions.visibilityOf(signIn));
+            return true;
+        } catch (TimeoutException e) {
             return false;
         }
     }

@@ -10,7 +10,6 @@ import org.yaml.snakeyaml.Yaml;
 
 import org.testng.annotations.Test;
 import static org.testng.Assert.assertTrue;
-import static org.testng.Assert.assertFalse;
 
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -46,7 +45,7 @@ public class SignInErrorsTests {
         SignInPage signInPage2 = signInPage.signInUnsuccessfully(UserData.blankPassword());
 
         assertTrue(signInPage2.hasAlertNotice());
-        assertFalse(HomePage.visit(driver).isSignedIn());
+        assertTrue(HomePage.visit(driver).isNotSignedIn());
 
         driver.quit();
     }
