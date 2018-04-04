@@ -17,9 +17,7 @@ import static org.awaitility.Awaitility.await;
 
 import static java.util.concurrent.TimeUnit.SECONDS;
 
-public class SignInPage {
-    private AndroidDriver driver;
-
+public class SignInPage extends BasePage {
     @FindBy(css = "a[data-test=sign-up]")
     private WebElement signUpLink;
 
@@ -78,31 +76,6 @@ public class SignInPage {
             wait.until(ExpectedConditions.visibilityOf(alert)).click();
             return true;
         } catch (TimeoutException e) {
-            return false;
-        }
-    }
-
-    private void waitWhileElementPresent(WebElement element, String message) {
-        try {
-            await().atMost(30, SECONDS).until(() -> !exits(element));
-        } catch (ConditionTimeoutException e) {
-            throw new TimeoutException(message, e);
-        }
-    }
-
-    private void waitUntilElementPresent(WebElement element, String message) {
-        try {
-            await().atMost(30, SECONDS).until(() -> exits(element));
-        } catch (ConditionTimeoutException e) {
-            throw new TimeoutException(message, e);
-        }
-    }
-
-    private Boolean exits(WebElement element) {
-        try {
-            element.isEnabled(); // any wire call will work
-            return true;
-        } catch (NotFoundException e) {
             return false;
         }
     }

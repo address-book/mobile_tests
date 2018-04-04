@@ -15,9 +15,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import static java.util.concurrent.TimeUnit.SECONDS;
 import static org.awaitility.Awaitility.await;
 
-public class SignUpPage {
-    private AndroidDriver driver;
-
+public class SignUpPage extends BasePage {
     @FindBy(id = "user_email")
     private WebElement emailField;
 
@@ -47,22 +45,5 @@ public class SignUpPage {
 
         waitWhileElementPresent(submit,
                 "Form should have been submitted, but it appears not to have worked");
-    }
-
-    private void waitWhileElementPresent(WebElement element, String message) {
-        try {
-            await().atMost(30, SECONDS).until(() -> !exits(element));
-        } catch (ConditionTimeoutException e) {
-            throw new TimeoutException(message, e);
-        }
-    }
-
-    private Boolean exits(WebElement element) {
-        try {
-            element.isEnabled(); // any wire call will work
-            return true;
-        } catch (NotFoundException e) {
-            return false;
-        }
     }
 }
