@@ -1,5 +1,7 @@
 package examples.tests;
 
+import examples.data.*;
+
 import io.appium.java_client.android.AndroidDriver;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
@@ -16,8 +18,8 @@ import java.net.URL;
 
 public class SignInSuccessTests {
 
-    @Test
-    public void signInSuccessful() throws MalformedURLException {
+    @Test(dataProvider = "validUser", dataProviderClass = UserData.class)
+    public void signInSuccessful(String email, String password) throws MalformedURLException {
         DesiredCapabilities capabilities = new DesiredCapabilities();
         capabilities.setCapability("platformName", "Android");
         capabilities.setCapability("platformVersion", "8.1");
@@ -37,8 +39,8 @@ public class SignInSuccessTests {
                 ExpectedConditions.presenceOfElementLocated(
                         By.id("session_email")));
 
-        emailElement.sendKeys("user@example.com");
-        driver.findElement(By.id("session_password")).sendKeys("password");
+        emailElement.sendKeys(email);
+        driver.findElement(By.id("session_password")).sendKeys(password);
         driver.findElement(By.name("commit")).click();
 
         assertEquals("Address Book", driver.getTitle());
