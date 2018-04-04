@@ -3,13 +3,12 @@ package examples.tests;
 import examples.data.*;
 
 import io.appium.java_client.android.AndroidDriver;
-import org.openqa.selenium.By;
 import org.openqa.selenium.remote.DesiredCapabilities;
 
 import org.yaml.snakeyaml.Yaml;
 
 import org.testng.annotations.Test;
-import static org.testng.Assert.assertEquals;
+import static org.testng.Assert.assertTrue;
 
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -39,15 +38,19 @@ public class SignUpTests {
         AndroidDriver driver = new AndroidDriver<>(
                 new URL("http://localhost:4723/wd/hub"), capabilities);
 
-        driver.get("http://a.testaddressbook.com/sign_up");
+        //
+        // Rewrite Test Declaratively
+        //
 
-        UserData userData = UserData.randomUser();
-
-        driver.findElement(By.id("user_email")).sendKeys(userData.getEmail());
-        driver.findElement(By.id("user_password")).sendKeys(userData.getPassword());
-        driver.findElement(By.name("commit")).click();
-
-        assertEquals("Address Book", driver.getTitle());
+//        driver.get("http://a.testaddressbook.com/sign_up");
+//
+//        UserData userData = UserData.randomUser();
+//
+//        driver.findElement(By.id("user_email")).sendKeys(userData.getEmail());
+//        driver.findElement(By.id("user_password")).sendKeys(userData.getPassword());
+//        driver.findElement(By.name("commit")).click();
+//
+//        assertEquals("Address Book", driver.getTitle());
 
         driver.quit();
     }
