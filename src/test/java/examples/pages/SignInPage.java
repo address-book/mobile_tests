@@ -37,8 +37,7 @@ public class SignInPage {
 
 
     public static SignInPage visit(AndroidDriver driver) {
-        HomePage homePage = HomePage.visit(driver);
-        homePage.navigateToSignIn();
+        driver.get("http://a.testaddressbook.com/sign_in");
         return new SignInPage(driver);
     }
 
