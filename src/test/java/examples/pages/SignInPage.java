@@ -52,8 +52,11 @@ public class SignInPage {
                 "Form should have been submitted, but it appears not to have worked");
     }
 
-    public SignInPage signInUnsuccessfully(UserData user) {
+    public void signInUnsuccessfully(UserData user) {
         signIn(user);
+
+        // Add synchronization code
+        // Add contextually useful error message
         return new SignInPage(driver);
     }
 
@@ -65,7 +68,9 @@ public class SignInPage {
         submit.click();
     }
 
-    public SignUpPage navigateToSignUp() {
+    public void navigateToSignUp() {
+        // Fix Method
+
         WebDriverWait wait = new WebDriverWait(driver, 10);
         wait.until(ExpectedConditions.visibilityOf(signUpLink)).click();
 

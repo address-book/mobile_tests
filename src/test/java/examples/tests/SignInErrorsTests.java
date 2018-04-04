@@ -40,6 +40,9 @@ public class SignInErrorsTests {
         AndroidDriver driver = new AndroidDriver<>(
                 new URL("http://localhost:4723/wd/hub"), capabilities);
 
+        // Fix test so that page objects are decoupled
+        // Fix test so that it navigates directly
+
         HomePage homePage = HomePage.visit(driver);
         SignInPage signInPage = homePage.navigateToSignIn();
         SignInPage signInPage2 = signInPage.signInUnsuccessfully(UserData.blankPassword());
