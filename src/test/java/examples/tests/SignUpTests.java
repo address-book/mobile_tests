@@ -14,7 +14,7 @@ import static org.testng.Assert.assertEquals;
 
 public class SignUpTests {
 
-    @Test
+    @Test(dataProvider = "randomUser", dataProviderClass = UserData.class)
     public void signInSuccessful(String email, String password) throws MalformedURLException {
         DesiredCapabilities capabilities = new DesiredCapabilities();
         capabilities.setCapability("platformName", "Android");
@@ -27,9 +27,11 @@ public class SignUpTests {
 
         driver.get("http://a.testaddressbook.com/sign_up");
 
-        // Add Action Code
+        driver.findElement(By.id("user_email")).sendKeys(email);
+        driver.findElement(By.id("user_password")).sendKeys(password);
+        driver.findElement(By.name("commit")).click();
 
-        // Add Assertion Code
+        assertEquals("Address Book", driver.getTitle());
 
         driver.quit();
     }
