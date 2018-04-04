@@ -1,5 +1,7 @@
 package examples.tests;
 
+import examples.data.*;
+
 import io.appium.java_client.android.AndroidDriver;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
@@ -36,8 +38,10 @@ public class SignInErrorsTests {
                 ExpectedConditions.presenceOfElementLocated(
                         By.id("session_email")));
 
-        emailElement.sendKeys("user@example.com");
-        driver.findElement(By.id("session_password")).sendKeys("");
+        UserData userData = UserData.blankPassword();
+
+        emailElement.sendKeys(userData.getEmail());
+        driver.findElement(By.id("session_password")).sendKeys(userData.getPassword());
         driver.findElement(By.name("commit")).click();
 
         By alertNotice = By.className("alert-notice");
