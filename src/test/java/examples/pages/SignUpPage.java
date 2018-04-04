@@ -2,25 +2,29 @@ package examples.pages;
 
 import examples.data.*;
 
-import io.appium.java_client.android.AndroidDriver;
+import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.pagefactory.AndroidFindBy;
+import io.appium.java_client.pagefactory.iOSFindBy;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
 
 public class SignUpPage extends BasePage {
     @FindBy(id = "user_email")
+    @iOSFindBy(xpath = "//XCUIElementTypeTextField")
     private WebElement emailField;
 
     @FindBy(id = "user_password")
+    @iOSFindBy(xpath = "//XCUIElementTypeSecureTextField")
     private WebElement passwordField;
 
     @FindBy(name = "commit")
+    @iOSFindBy(xpath = "//XCUIElementTypeButton[@name='Sign up']")
     @AndroidFindBy(xpath = "//android.widget.Button[@content-desc='Sign up' or @text='Sign up']")
     private WebElement submit;
 
 
-    public static SignUpPage visit(AndroidDriver driver) {
+    public static SignUpPage visit(AppiumDriver driver) {
         if (isNative(driver)) {
             SignInPage signInPage = SignInPage.visit(driver);
             signInPage.navigateToSignUp();
@@ -30,7 +34,7 @@ public class SignUpPage extends BasePage {
         return new SignUpPage(driver);
     }
 
-    public SignUpPage(AndroidDriver driver) {
+    public SignUpPage(AppiumDriver driver) {
         super(driver);
     }
 

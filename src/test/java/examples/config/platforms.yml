@@ -22,3 +22,14 @@ androidAppSauce:
   deviceName: Android GoogleAPI Emulator
   app: https://github.com/address-book/mobile_apps/blob/master/AddressBook.apk?raw=true
   appWaitActivity: com.address.book.MainActivity
+iOSAppLocal:
+  platformName: iOS
+  platformVersion: "11.2"
+  deviceName: iPhone X
+  app: https://github.com/address-book/mobile_apps/blob/master/AddressBook.app.zip?raw=true
+iOSAppSauce:
+  platformName: iOS
+  platformVersion: "11.2"
+  deviceName: iPhone X Simulator
+  app: https://github.com/address-book/mobile_apps/blob/master/AddressBook.app.zip?raw=true
+  appiumVersion: "1.7.2"

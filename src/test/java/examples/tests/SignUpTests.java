@@ -9,7 +9,7 @@ import static org.testng.Assert.assertTrue;
 public class SignUpTests extends BaseTest {
 
     @Test()
-    public void signInSuccessful() {
+    public void signUpSuccessful() {
         SignUpPage signUpPage = SignUpPage.visit(driver);
         signUpPage.signUp(UserData.randomUser());
 

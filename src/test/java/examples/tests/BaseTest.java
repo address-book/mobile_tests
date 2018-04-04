@@ -1,6 +1,6 @@
 package examples.tests;
 
-import io.appium.java_client.android.AndroidDriver;
+import io.appium.java_client.AppiumDriver;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.testng.ITestResult;
@@ -17,9 +17,9 @@ import java.util.Map;
 
 
 public class BaseTest {
-    AndroidDriver driver;
+    AppiumDriver driver;
 
-    private Boolean useSauce = System.getProperty("USE_SAUCE") != null;
+    private Boolean useSauce = true; //System.getProperty("USE_SAUCE") != null;
 
     private static DesiredCapabilities createCapabilities(String value) throws FileNotFoundException {
         FileReader file = new FileReader("src/test/java/examples/config/platforms.yml");
@@ -39,7 +39,7 @@ public class BaseTest {
         String platformProperty = System.getProperty("PLATFORM");
 
         if (useSauce) {
-            String platform = (platformProperty != null) ? platformProperty : "androidAppSauce";
+            String platform = (platformProperty != null) ? platformProperty : "iOSAppSauce";
             capabilities = createCapabilities(platform);
 
             String USER = System.getenv("SAUCE_USERNAME");
@@ -53,12 +53,12 @@ public class BaseTest {
 
             url = "https://" + USER + ":" + KEY + "@ondemand.saucelabs.com/wd/hub";
         } else {
-            String platform = (platformProperty != null) ? platformProperty : "androidAppLocal";
+            String platform = (platformProperty != null) ? platformProperty : "iOSAppLocal";
             capabilities = createCapabilities(platform);
             url = "http://localhost:4723/wd/hub";
         }
 
-        driver = new AndroidDriver<>(new URL(url), capabilities);
+        driver = new AppiumDriver<>(new URL(url), capabilities);
     }
 
     @AfterMethod

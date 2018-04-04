@@ -2,32 +2,38 @@ package examples.pages;
 
 import examples.data.*;
 
-import io.appium.java_client.android.AndroidDriver;
+import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.pagefactory.AndroidFindBy;
+import io.appium.java_client.pagefactory.iOSFindBy;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
 public class SignInPage extends BasePage {
     @FindBy(css = "a[data-test=sign-up]")
     @AndroidFindBy(xpath = "//android.view.View[@content-desc='Sign up' or @text='Sign up']")
+    @iOSFindBy(accessibility = "Sign up")
     private WebElement signUpLink;
 
     @FindBy(id = "session_email")
+    @iOSFindBy(xpath = "//XCUIElementTypeTextField")
     private WebElement emailField;
 
     @FindBy(id = "session_password")
+    @iOSFindBy(xpath = "//XCUIElementTypeSecureTextField")
     private WebElement passwordField;
 
     @FindBy(name = "commit")
+    @iOSFindBy(xpath = "//XCUIElementTypeButton[@name='Sign in']")
     @AndroidFindBy(xpath = "//android.widget.Button[@content-desc='Sign in' or @text='Sign in']")
     private WebElement submit;
 
     @FindBy(className = "alert")
+    @iOSFindBy(accessibility = "Bad email or password.")
     @AndroidFindBy(xpath = "//android.view.View[@content-desc='Bad email or password.' or @text='Bad email or password.']")
     private WebElement alert;
 
 
-    public static SignInPage visit(AndroidDriver driver) {
+    public static SignInPage visit(AppiumDriver driver) {
         if (isNative(driver)) {
             HomePage homePage = HomePage.visit(driver);
             homePage.navigateToSignIn();
@@ -37,7 +43,7 @@ public class SignInPage extends BasePage {
         return new SignInPage(driver);
     }
 
-    public SignInPage(AndroidDriver driver) {
+    public SignInPage(AppiumDriver driver) {
         super(driver);
     }
 
