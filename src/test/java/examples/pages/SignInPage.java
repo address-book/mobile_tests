@@ -34,14 +34,12 @@ public class SignInPage {
         PageFactory.initElements(driver, this);
     }
 
-    public HomePage signInSuccessfully(UserData user) {
+    public void signInSuccessfully(UserData user) {
         WebDriverWait wait = new WebDriverWait(driver, 10);
 
         wait.until(ExpectedConditions.visibilityOf(emailField)).sendKeys(user.getEmail());
         passwordField.sendKeys(user.getPassword());
         submit.click();
-
-        return new HomePage(driver);
     }
 
     public SignInPage signInUnsuccessfully(UserData user) {

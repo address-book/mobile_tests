@@ -31,10 +31,9 @@ public class HomePage {
         PageFactory.initElements(driver, this);
     }
 
-    public SignInPage navigateToSignIn() {
+    public void navigateToSignIn() {
         menu.click();
         signIn.click();
-        return new SignInPage(driver);
     }
 
     public Boolean isSignedIn() {
