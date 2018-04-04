@@ -12,14 +12,28 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 public class SignUpPage {
     private AndroidDriver driver;
 
-    // Implement Elements
+    @FindBy(id = "user_email")
+    private WebElement emailField;
+
+    @FindBy(id = "user_password")
+    private WebElement passwordField;
+
+    @FindBy(name = "commit")
+    private WebElement submit;
 
 
     public SignUpPage(AndroidDriver driver) {
-        // Implement Method
+        this.driver = driver;
+        PageFactory.initElements(driver, this);
     }
 
     public HomePage signUp(UserData user) {
-        // Implement Method
+        WebDriverWait wait = new WebDriverWait(driver, 10);
+
+        wait.until(ExpectedConditions.visibilityOf(emailField)).sendKeys(user.getEmail());
+        passwordField.sendKeys(user.getPassword());
+        submit.click();
+
+        return new HomePage(driver);
     }
 }
