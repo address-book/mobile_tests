@@ -1,16 +1,10 @@
 package examples.pages;
 
 import io.appium.java_client.android.AndroidDriver;
-import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
-import org.openqa.selenium.support.PageFactory;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
 
-public class HomePage {
-    private AndroidDriver driver;
-
+public class HomePage extends BasePage {
     @FindBy(tagName = "button")
     private WebElement menu;
 
@@ -27,35 +21,22 @@ public class HomePage {
     }
 
     public HomePage(AndroidDriver driver) {
-        this.driver = driver;
-        PageFactory.initElements(driver, this);
+        super(driver);
     }
 
     public void navigateToSignIn() {
-        menu.click();
-        signIn.click();
+        click(menu);
+        click(signIn);
     }
 
     public Boolean isSignedIn() {
-        WebDriverWait wait = new WebDriverWait(driver, 10);
-        wait.until(ExpectedConditions.visibilityOf(menu)).click();
-        try {
-            wait.until(ExpectedConditions.visibilityOf(user));
-            return true;
-        } catch (TimeoutException e) {
-            return false;
-        }
+        click(menu);
+        return eventuallyExists(user);
     }
 
     public Boolean isNotSignedIn() {
-        WebDriverWait wait = new WebDriverWait(driver, 10);
-        wait.until(ExpectedConditions.visibilityOf(menu)).click();
-        try {
-            wait.until(ExpectedConditions.visibilityOf(signIn));
-            return true;
-        } catch (TimeoutException e) {
-            return false;
-        }
+        click(menu);
+        return eventuallyExists(signIn);
     }
 
 }
