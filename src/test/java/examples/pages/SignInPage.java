@@ -55,9 +55,8 @@ public class SignInPage {
     public void signInUnsuccessfully(UserData user) {
         signIn(user);
 
-        // Add synchronization code
-        // Add contextually useful error message
-        return new SignInPage(driver);
+        waitUntilElementPresent(alert,
+                "Form submission should have caused an error, but none was found");
     }
 
     private void signIn(UserData user) {
@@ -69,12 +68,8 @@ public class SignInPage {
     }
 
     public void navigateToSignUp() {
-        // Fix Method
-
         WebDriverWait wait = new WebDriverWait(driver, 10);
         wait.until(ExpectedConditions.visibilityOf(signUpLink)).click();
-
-        return new SignUpPage(driver);
     }
 
     public Boolean hasAlertNotice() {

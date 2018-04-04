@@ -39,16 +39,11 @@ public class SignUpTests {
         AndroidDriver driver = new AndroidDriver<>(
                 new URL("http://localhost:4723/wd/hub"), capabilities);
 
-        // Fix test so that page objects are decoupled
-        // Fix test so that it navigates directly
+        SignUpPage signUpPage = SignUpPage.visit(driver);
+        signUpPage.signUp(UserData.randomUser());
 
-        HomePage homePage = HomePage.visit(driver);
-        SignInPage signInPage = homePage.navigateToSignIn();
-        SignUpPage signUpPage = signInPage.navigateToSignUp();
-
-        HomePage homePage2 = signUpPage.signUp(UserData.randomUser());
-
-        assertTrue(homePage2.isSignedIn());
+        HomePage homePage = new HomePage(driver);
+        assertTrue(homePage.isSignedIn());
 
         driver.quit();
     }

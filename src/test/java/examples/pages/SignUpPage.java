@@ -29,7 +29,8 @@ public class SignUpPage {
 
 
     public static SignUpPage visit(AndroidDriver driver) {
-        // implement method
+        driver.get("http://a.testaddressbook.com/sign_up");
+        return new SignUpPage(driver);
     }
 
     public SignUpPage(AndroidDriver driver) {
@@ -38,17 +39,14 @@ public class SignUpPage {
     }
 
     public void signUp(UserData user) {
-        // Fix Method
-
         WebDriverWait wait = new WebDriverWait(driver, 10);
 
         wait.until(ExpectedConditions.visibilityOf(emailField)).sendKeys(user.getEmail());
         passwordField.sendKeys(user.getPassword());
         submit.click();
 
-        // Add synchronization code
-        // Add contextually useful error message
-        return new HomePage(driver);
+        waitWhileElementPresent(submit,
+                "Form should have been submitted, but it appears not to have worked");
     }
 
     private void waitWhileElementPresent(WebElement element, String message) {
