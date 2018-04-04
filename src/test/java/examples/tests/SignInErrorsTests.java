@@ -40,34 +40,12 @@ public class SignInErrorsTests {
         AndroidDriver driver = new AndroidDriver<>(
                 new URL("http://localhost:4723/wd/hub"), capabilities);
 
-        //
-        // Rewrite Test Declaratively
-        //
+        HomePage homePage = HomePage.visit(driver);
+        SignInPage signInPage = homePage.navigateToSignIn();
+        HomePage homePage2 = signInPage.signIn(UserData.blankPassword());
 
-//        driver.get("http://a.testaddressbook.com");
-//        driver.findElement(By.tagName("button")).click();
-//        driver.findElement(By.id("sign-in")).click();
-//
-//        WebDriverWait wait = new WebDriverWait(driver, 10);
-//
-//        WebElement emailElement = wait.until(
-//                ExpectedConditions.presenceOfElementLocated(
-//                        By.id("session_email")));
-//
-//        UserData userData = UserData.blankPassword();
-//
-//        emailElement.sendKeys(userData.getEmail());
-//        driver.findElement(By.id("session_password")).sendKeys(userData.getPassword());
-//        driver.findElement(By.name("commit")).click();
-//
-//        By alertNotice = By.className("alert-notice");
-//        assertEquals(1, driver.findElements(alertNotice).size());
-//
-//        assertEquals("Address Book - Sign In", driver.getTitle());
-//        assertEquals("http://a.testaddressbook.com/session", driver.getCurrentUrl());
-//
-//        By currentUser = By.cssSelector("span[data-test=current-user]");
-//        assertEquals(0, driver.findElements(currentUser).size());
+        assertTrue(signInPage.hasAlertNotice());
+        assertFalse(HomePage.visit(driver).isSignedIn());
 
         driver.quit();
     }

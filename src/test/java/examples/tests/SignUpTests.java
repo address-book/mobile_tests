@@ -38,19 +38,13 @@ public class SignUpTests {
         AndroidDriver driver = new AndroidDriver<>(
                 new URL("http://localhost:4723/wd/hub"), capabilities);
 
-        //
-        // Rewrite Test Declaratively
-        //
+        HomePage homePage = HomePage.visit(driver);
+        SignInPage signInPage = homePage.navigateToSignIn();
+        SignUpPage signUpPage = signInPage.navigateToSignUp();
 
-//        driver.get("http://a.testaddressbook.com/sign_up");
-//
-//        UserData userData = UserData.randomUser();
-//
-//        driver.findElement(By.id("user_email")).sendKeys(userData.getEmail());
-//        driver.findElement(By.id("user_password")).sendKeys(userData.getPassword());
-//        driver.findElement(By.name("commit")).click();
-//
-//        assertEquals("Address Book", driver.getTitle());
+        HomePage homePage2 = signUpPage.signUp(UserData.randomUser());
+
+        assertTrue(homePage2.isSignedIn());
 
         driver.quit();
     }
