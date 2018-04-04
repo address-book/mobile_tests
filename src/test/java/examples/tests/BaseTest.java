@@ -1,7 +1,9 @@
 package examples.tests;
 
 import io.appium.java_client.android.AndroidDriver;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.remote.DesiredCapabilities;
+import org.testng.ITestResult;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.yaml.snakeyaml.Yaml;
@@ -21,7 +23,7 @@ public class BaseTest {
 
     private static DesiredCapabilities createCapabilities(String value) throws FileNotFoundException {
         FileReader file = new FileReader("src/test/java/examples/config/platforms.yml");
-        Map<String, Object> platforms = new Yaml().load(file);
+        Map<String, Object> platforms = (Map<String, Object>) new Yaml().load(file);
         Map<String, Object> platform = (Map<String, Object>) platforms.get(value);
         DesiredCapabilities capabilities = new DesiredCapabilities();
         for (String key : platform.keySet()) {
@@ -51,7 +53,7 @@ public class BaseTest {
 
             url = "https://" + USER + ":" + KEY + "@ondemand.saucelabs.com/wd/hub";
         } else {
-            String platform = (platformProperty != null) ? platformProperty : "androidChrome";
+            String platform = (platformProperty != null) ? platformProperty : "androidChromeLocal";
             capabilities = createCapabilities(platform);
             url = "http://localhost:4723/wd/hub";
         }
@@ -60,7 +62,16 @@ public class BaseTest {
     }
 
     @AfterMethod
-    public void teardown() {
+    public void tearDown(ITestResult result) {
+        String status = result.isSuccess() ? "passed" : "failed";
+
+        if (useSauce) {
+            JavascriptExecutor js = driver;
+            js.executeScript("sauce:job-result=" + status);
+        } else {
+            System.out.println(status);
+        }
+
         driver.quit();
     }
 
