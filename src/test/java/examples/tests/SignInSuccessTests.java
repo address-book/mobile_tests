@@ -18,8 +18,8 @@ import java.net.URL;
 
 public class SignInSuccessTests {
 
-    @Test(dataProvider = "validUser", dataProviderClass = UserData.class)
-    public void signInSuccessful(String email, String password) throws MalformedURLException {
+    @Test
+    public void signInSuccessful() throws MalformedURLException {
         DesiredCapabilities capabilities = new DesiredCapabilities();
         capabilities.setCapability("platformName", "Android");
         capabilities.setCapability("platformVersion", "8.1");
@@ -38,6 +38,8 @@ public class SignInSuccessTests {
         WebElement emailElement = wait.until(
                 ExpectedConditions.presenceOfElementLocated(
                         By.id("session_email")));
+
+        // Define email and password
 
         emailElement.sendKeys(email);
         driver.findElement(By.id("session_password")).sendKeys(password);

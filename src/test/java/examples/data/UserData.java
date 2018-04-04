@@ -18,6 +18,14 @@ public class UserData {
         return new UserData(data);
     }
 
+    public static UserData validUser() {
+        // implement method
+    }
+
+    public static UserData randomUser() {
+        // implement method
+    }
+
     private UserData(Map<String, String> defaultData) {
         email = defaultData.get("email");
         password = defaultData.get("password");
@@ -32,18 +40,5 @@ public class UserData {
 
     public String getPassword() {
         return password;
-    }
-
-    @DataProvider(name = "validUser")
-    public static Object[][] valid() {
-        return new Object[][] {{ "user@example.com", "password" }};
-    }
-
-    @DataProvider(name = "randomUser")
-    public static Object[][] random() {
-        Faker faker = new Faker();
-        return new Object[][] {
-                { faker.internet().emailAddress(), faker.internet().password() }
-        };
     }
 }
