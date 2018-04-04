@@ -14,7 +14,7 @@ public class SignInErrorsTests extends BaseTest {
         signInPage.signInUnsuccessfully(UserData.blankPassword());
 
         assertTrue(signInPage.hasAlertNotice());
-        assertTrue(HomePage.visit(driver).isNotSignedIn());
+        assertTrue(pages.getHomePage().isNotSignedIn());
     }
 
 }

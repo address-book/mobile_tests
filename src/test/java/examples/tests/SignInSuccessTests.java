@@ -13,8 +13,7 @@ public class SignInSuccessTests extends BaseTest {
         SignInPage signInPage = SignInPage.visit(driver);
         signInPage.signInSuccessfully(UserData.validUser());
 
-        HomePage homePage = new HomePage(driver);
-        assertTrue(homePage.isSignedIn());
+        assertTrue(pages.getHomePage().isSignedIn());
     }
 
 }

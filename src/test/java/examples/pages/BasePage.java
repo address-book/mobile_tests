@@ -33,7 +33,7 @@ public class BasePage {
         return driver.getContext().equals("NATIVE_APP");
     }
 
-    Boolean isAndroid(AppiumDriver driver) {
+    Boolean isAndroid() {
         return !driver.getPlatformName().equals("iOS");
     }
 }

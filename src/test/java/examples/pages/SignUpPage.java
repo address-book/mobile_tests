@@ -12,16 +12,16 @@ import org.openqa.selenium.support.FindBy;
 public class SignUpPage extends BasePage {
     @FindBy(id = "user_email")
     @iOSFindBy(xpath = "//XCUIElementTypeTextField")
-    private WebElement emailField;
+    protected WebElement emailField;
 
     @FindBy(id = "user_password")
     @iOSFindBy(xpath = "//XCUIElementTypeSecureTextField")
-    private WebElement passwordField;
+    protected WebElement passwordField;
 
     @FindBy(name = "commit")
     @iOSFindBy(xpath = "//XCUIElementTypeButton[@name='Sign up']")
     @AndroidFindBy(xpath = "//android.widget.Button[@content-desc='Sign up' or @text='Sign up']")
-    private WebElement submit;
+    protected WebElement submit;
 
 
     public static SignUpPage visit(AppiumDriver driver) {

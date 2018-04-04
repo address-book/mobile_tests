@@ -9,7 +9,7 @@ import static org.awaitility.Awaitility.await;
 
 public class Element {
     private WebDriver driver;
-    private WebElement element;
+    protected WebElement element;
     private WebDriverWait wait;
 
     public Element(WebDriver driver, WebElement element) {

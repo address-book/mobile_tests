@@ -1,5 +1,6 @@
 package examples.tests;
 
+import examples.pages.Pages;
 import io.appium.java_client.AppiumDriver;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.remote.DesiredCapabilities;
@@ -18,8 +19,9 @@ import java.util.Map;
 
 public class BaseTest {
     AppiumDriver driver;
+    Pages pages;
 
-    private Boolean useSauce = true; //System.getProperty("USE_SAUCE") != null;
+    private Boolean useSauce = false; //System.getProperty("USE_SAUCE") != null;
 
     private static DesiredCapabilities createCapabilities(String value) throws FileNotFoundException {
         FileReader file = new FileReader("src/test/java/examples/config/platforms.yml");
@@ -59,6 +61,7 @@ public class BaseTest {
         }
 
         driver = new AppiumDriver<>(new URL(url), capabilities);
+        pages = new Pages(driver);
     }
 
     @AfterMethod

@@ -13,8 +13,7 @@ public class SignUpTests extends BaseTest {
         SignUpPage signUpPage = SignUpPage.visit(driver);
         signUpPage.signUp(UserData.randomUser());
 
-        HomePage homePage = new HomePage(driver);
-        assertTrue(homePage.isSignedIn());
+        assertTrue(pages.getHomePage().isSignedIn());
     }
 
 }
