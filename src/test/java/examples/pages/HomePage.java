@@ -25,18 +25,18 @@ public class HomePage extends BasePage {
     }
 
     public void navigateToSignIn() {
-        click(menu);
-        click(signIn);
+        getElement(menu).click();
+        getElement(signIn).click();
     }
 
     public Boolean isSignedIn() {
-        click(menu);
-        return eventuallyExists(user);
+        getElement(menu).click();
+        return getElement(user).eventuallyExists();
     }
 
     public Boolean isNotSignedIn() {
-        click(menu);
-        return eventuallyExists(signIn);
+        getElement(menu).click();
+        return getElement(signIn).eventuallyExists();
     }
 
 }

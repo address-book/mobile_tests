@@ -5,9 +5,6 @@ import examples.data.*;
 import io.appium.java_client.android.AndroidDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
-import org.openqa.selenium.support.PageFactory;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
 
 
 public class SignUpPage extends BasePage {
@@ -31,11 +28,11 @@ public class SignUpPage extends BasePage {
     }
 
     public void signUp(UserData user) {
-        sendKeys(emailField, user.getEmail());
-        sendKeys(passwordField, user.getPassword());
-        click(submit);
+        getElement(emailField).sendKeys(user.getEmail());
+        getElement(passwordField).sendKeys(user.getPassword());
+        getElement(submit).click();
 
-        waitWhileElementPresent(submit,
-                "Form should have been submitted, but it appears not to have worked");
+        getElement(submit).
+                waitWhilePresent("Form should have been submitted, but it appears not to have worked");
     }
 }

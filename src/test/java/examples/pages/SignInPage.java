@@ -3,12 +3,8 @@ package examples.pages;
 import examples.data.*;
 
 import io.appium.java_client.android.AndroidDriver;
-import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
-import org.openqa.selenium.support.PageFactory;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class SignInPage extends BasePage {
     @FindBy(css = "a[data-test=sign-up]")
@@ -38,28 +34,27 @@ public class SignInPage extends BasePage {
 
     public void signInSuccessfully(UserData user) {
         signIn(user);
-        waitWhileElementPresent(submit,
-                "Form should have been submitted, but it appears not to have worked");
+        getElement(submit).
+                waitWhilePresent("Form should have been submitted, but it appears not to have worked");
     }
 
     public void signInUnsuccessfully(UserData user) {
         signIn(user);
-
-        waitUntilElementPresent(alert,
-                "Form submission should have caused an error, but none was found");
+        getElement(alert).
+                waitUntilPresent("Form submission should have caused an error, but none was found");
     }
 
     private void signIn(UserData user) {
-        sendKeys(emailField, user.getEmail());
-        sendKeys(passwordField, user.getPassword());
-        click(submit);
+        getElement(emailField).sendKeys(user.getEmail());
+        getElement(passwordField).sendKeys(user.getPassword());
+        getElement(submit).click();
     }
 
     public void navigateToSignUp() {
-        click(signUpLink);
+        getElement(signUpLink).click();
     }
 
     public Boolean hasAlertNotice() {
-        return eventuallyExists(alert);
+        return getElement(alert).eventuallyExists();
     }
 }
