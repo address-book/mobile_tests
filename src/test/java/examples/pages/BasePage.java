@@ -2,12 +2,8 @@ package examples.pages;
 
 import io.appium.java_client.android.AndroidDriver;
 import org.awaitility.core.ConditionTimeoutException;
-import org.openqa.selenium.NotFoundException;
-import org.openqa.selenium.TimeoutException;
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.*;
 import org.openqa.selenium.support.PageFactory;
-import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import static java.util.concurrent.TimeUnit.SECONDS;
@@ -23,18 +19,25 @@ public class BasePage {
     }
 
     void click(WebElement element) {
-        waitUntilElementPresent(element, "");
-        element.click();
+        while(true) {
+            try {
+                element.click();
+                return;
+            } catch (NoSuchElementException | ElementNotVisibleException e) {
+                waitUntilElementPresent(element, "");
+            }
+        }
     }
 
     void sendKeys(WebElement element, String text) {
-        waitUntilElementPresent(element, "");
-        element.sendKeys(text);
-    }
-
-    String getText(WebElement element) {
-        waitUntilElementPresent(element, "");
-        return element.getText();
+        while(true) {
+            try {
+                element.sendKeys(text);
+                return;
+            } catch (NoSuchElementException | ElementNotVisibleException e) {
+                waitUntilElementPresent(element, "");
+            }
+        }
     }
 
     protected Boolean exits(WebElement element) {
