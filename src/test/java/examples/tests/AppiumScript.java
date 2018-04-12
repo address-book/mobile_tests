@@ -3,6 +3,7 @@ package examples.tests;
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.MobileBy;
 import io.appium.java_client.android.AndroidDriver;
+import io.appium.java_client.ios.IOSDriver;
 import org.openqa.selenium.By;
 import org.openqa.selenium.remote.DesiredCapabilities;
 
@@ -56,6 +57,48 @@ public class AppiumScript {
 
         // <android.widget.Button content-desc="Sign in">
         driver.findElement(By.xpath("//android.widget.Button[@content-desc='Sign in']")).click();
+    }
+
+    @Test
+    public void signInIOS() throws IOException {
+        DesiredCapabilities capabilities = new DesiredCapabilities();
+        capabilities.setCapability("platformName", "iOS");
+        capabilities.setCapability("platformVersion", "11.2");
+        capabilities.setCapability("deviceName", "iPhone X");
+        File relative = new File("lib/AddressBook.app.zip");
+        capabilities.setCapability("app", relative.getCanonicalPath());
+        capabilities.setCapability("appiumVersion", "1.7.2");
+
+        driver = new IOSDriver<>(
+                new URL("http://localhost:4723/wd/hub"), capabilities);
+
+        WebDriverWait wait = new WebDriverWait(driver, 30);
+
+        // <XCUIElementTypeButton name="Toggle navigation">
+        wait.until(ExpectedConditions.visibilityOfElementLocated(
+                By.className("XCUIElementTypeButton"))).click();
+
+        // <XCUIElementTypeStaticText name="Sign in">
+        wait.until(ExpectedConditions.visibilityOfElementLocated(
+                By.id("Sign in"))).click();
+
+        // <XCUIElementTypeTextField>
+        wait.until(ExpectedConditions.visibilityOfElementLocated(
+                By.className("XCUIElementTypeTextField"))).sendKeys(("user@example.com"));
+
+        // <XCUIElementTypeSecureTextField>
+        driver.findElement(By.className("XCUIElementTypeSecureTextField")).sendKeys("password");
+
+        // <XCUIElementTypeButton name="Sign in">
+        driver.findElement(MobileBy.AccessibilityId("Sign in"));
+
+        // <XCUIElementTypeButton name="Sign in">
+        String selector = "type == 'XCUIElementTypeButton' AND name == 'Sign in'";
+        driver.findElement(MobileBy.iOSNsPredicateString(selector));
+
+        // <XCUIElementTypeButton name="Sign in">
+        String selectorChain = "**/XCUIElementTypeOther[`name BEGINSWITH 'Address Book'`]/XCUIElementTypeButton";
+        driver.findElement(MobileBy.iOSClassChain(selectorChain)).click();
     }
 
     @AfterMethod
