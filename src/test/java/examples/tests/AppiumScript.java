@@ -54,6 +54,43 @@ public class AppiumScript {
     }
 
     @Test
+    public void signInAndroidTO() throws IOException {
+        DesiredCapabilities capabilities = createCapabilities("androidAppTO");
+        driver = new AndroidDriver<>(
+                new URL("https://eu1.appium.testobject.com/wd/hub"), capabilities);
+        WebDriverWait wait = new WebDriverWait(driver, 90);
+
+        wait.until(ExpectedConditions.visibilityOfElementLocated(
+                By.className("android.widget.Button"))).click();
+        wait.until(ExpectedConditions.visibilityOfElementLocated(
+                By.id("sign-in"))).click();
+
+        wait.until(ExpectedConditions.visibilityOfElementLocated(
+                By.id("session_email"))).sendKeys(("user@example.com"));
+        driver.findElement(By.id("session_password")).sendKeys("password");
+        driver.findElement(By.xpath("//android.widget.Button[@text='Sign in']")).click();
+    }
+
+    @Test
+    public void signInIOSTO() throws IOException {
+        DesiredCapabilities capabilities = createCapabilities("iOSAppTO");
+        driver = new IOSDriver<>(
+                new URL("https://eu1.appium.testobject.com/wd/hub"), capabilities);
+        WebDriverWait wait = new WebDriverWait(driver, 30);
+
+        wait.until(ExpectedConditions.visibilityOfElementLocated(
+                By.className("XCUIElementTypeButton"))).click();
+        wait.until(ExpectedConditions.visibilityOfElementLocated(
+                By.id("Sign in"))).click();
+
+        wait.until(ExpectedConditions.visibilityOfElementLocated(
+                By.className("XCUIElementTypeTextField"))).sendKeys(("user@example.com"));
+        driver.findElement(By.className("XCUIElementTypeSecureTextField")).sendKeys("password");
+        String selector = "type == 'XCUIElementTypeButton' AND name == 'Sign in'";
+        driver.findElement(MobileBy.iOSNsPredicateString(selector)).click();
+    }
+
+    @Test
     public void signInIOS() throws IOException {
         DesiredCapabilities capabilities = createCapabilities("iOSAppLocal");
         driver = new IOSDriver<>(

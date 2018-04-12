@@ -10,3 +10,8 @@ iOSAppLocal:
   platformVersion: "11.2"
   deviceName: iPhone X
   app: https://github.com/address-book/mobile_apps/blob/master/AddressBook.app.zip?raw=true
+androidAppTO:
+  testobject_api_key: B5CC080A41984A94BF791F3275332A73
+  appWaitActivity: com.address.book.MainActivity
+iOSAppTO:
+  testobject_api_key: BCE9F869FFB14AEA9DDA32447916BBE3
