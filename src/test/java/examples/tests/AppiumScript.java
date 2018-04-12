@@ -8,6 +8,8 @@ import org.openqa.selenium.remote.DesiredCapabilities;
 
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import org.testng.ITestResult;
+import org.testng.annotations.AfterMethod;
 import org.testng.annotations.Test;
 
 import java.io.File;
@@ -48,7 +50,12 @@ public class AppiumScript {
         driver.findElement(By.id("session_password")).sendKeys("password");
 
         driver.findElement(By.xpath("//android.widget.Button[@content-desc='Sign in']")).click();
+    }
 
+    @AfterMethod
+    public void tearDown(ITestResult result) {
+        String status = result.isSuccess() ? "passed" : "failed";
+        System.out.println(status);
         driver.quit();
     }
 
