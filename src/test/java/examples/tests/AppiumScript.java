@@ -36,19 +36,25 @@ public class AppiumScript {
 
         WebDriverWait wait = new WebDriverWait(driver, 30);
 
+        // <android.widget.Button content-desc="Toggle navigation">
         wait.until(ExpectedConditions.visibilityOfElementLocated(
                 By.className("android.widget.Button"))).click();
 
+        // <android.view.View resource-id="sign-in">
         wait.until(ExpectedConditions.visibilityOfElementLocated(
                 By.id("sign-in")));
 
+        // <android.view.View content-desc="Sign in">
         driver.findElement(MobileBy.AccessibilityId("Sign in")).click();
 
+        // <android.widget.EditText resource-id="session_email">
         wait.until(ExpectedConditions.visibilityOfElementLocated(
                 By.id("session_email"))).sendKeys(("user@example.com"));
 
+        // <android.widget.EditText resource-id="session_password">
         driver.findElement(By.id("session_password")).sendKeys("password");
 
+        // <android.widget.Button content-desc="Sign in">
         driver.findElement(By.xpath("//android.widget.Button[@content-desc='Sign in']")).click();
     }
 
